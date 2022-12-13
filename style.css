@@ -18,14 +18,28 @@ body {
   padding: 0;
 }
 
-.view-controller {
+.view-controller .page-view {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100vh;
 }
 
-.view-controller .page-view {
+.home-view {
+  justify-content: center;
+  align-items: center;
+}
+
+.t-header {
   width: 100%;
-  height: 100%;
+  height: 50%;
+  text-align: center;
+}
+
+.t-nav {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
 }
 
 .t-btn {
