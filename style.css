@@ -1,6 +1,7 @@
 :root {
   --font-family: "Roboto Mono", monospace;
-  --tt-primary: #f40002;
+  --tt-primary-rgb: 244, 0, 2;
+  --tt-primary: rgba(var(--tt-primary-rgb), 1);
 }
 
 * {
@@ -30,9 +31,18 @@ body {
 }
 
 .t-nav .nav-btn {
+  aspect-ratio: 1;
+}
+
+.t-btn {
   background-color: transparent;
   color: var(--tt-primary);
+  cursor: pointer;
   border: 2px solid;
   padding: 10px;
-  aspect-ratio: 1;
+  transition: box-shadow 0.2s;
+}
+
+.t-nav .t-btn:hover {
+  box-shadow: 0 2px 5px rgba(var(--tt-primary-rgb),0.25);
 }
