@@ -2,6 +2,8 @@
   --font-family: "Roboto Mono", monospace;
   --tt-primary-rgb: 244, 0, 2;
   --tt-primary: rgba(var(--tt-primary-rgb), 1);
+  
+  --gutter-x: 10%;
 }
 
 * {
@@ -49,6 +51,7 @@ body {
 .t-form {
   display: flex;
   justify-content: center;
+  gap: 1rem;
 }
 
 .t-field {
@@ -67,7 +70,7 @@ body {
   color: var(--tt-primary);
   cursor: pointer;
   border: 2px solid;
-  padding: 5px;
+  padding: 0.5rem;
   transition: box-shadow 0.2s;
 }
 
