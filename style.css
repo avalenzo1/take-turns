@@ -23,6 +23,11 @@ body {
   height: 100vh;
 }
 
+.view-controller .page-view {
+  width: 100%;
+  height: 100%;
+}
+
 .t-btn {
   background-color: transparent;
   color: var(--tt-primary);
