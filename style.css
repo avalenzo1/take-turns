@@ -3,10 +3,33 @@
   --tt-primary: #f40002;
 }
 
-body {
-  font-family: var(--font-family);
-  background-color: var(--tt-primary);
-  color: #ffffff;
-  
+* {
+  box-sizing: border-box;
 }
 
+body {
+  font-family: var(--font-family);
+  padding: 0;
+  
+  background-color: var(--tt-primary);
+  color: #ffffff;
+}
+
+.t-main {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.t-nav {
+  display: flex;
+  gap: 25px;
+}
+
+.t-nav .nav-btn {
+  aspect-ratio: 1;
+  border: none;
+  background-color: #ffffff;
+  padding: 10px;
+}
