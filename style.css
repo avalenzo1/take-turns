@@ -1,5 +1,5 @@
 :root {
-  --font-family: 'Roboto Mono', monospace;
+  --font-family: "Roboto Mono", monospace;
   --tt-primary: #f40002;
 }
 
@@ -7,12 +7,14 @@
   box-sizing: border-box;
 }
 
-body {
+html,
+body,
+button {
   font-family: var(--font-family);
+}
+
+body {
   padding: 0;
-  
-  background-color: var(--tt-primary);
-  color: #ffffff;
 }
 
 .t-main {
@@ -28,8 +30,9 @@ body {
 }
 
 .t-nav .nav-btn {
-  aspect-ratio: 1;
-  border: none;
-  background-color: #ffffff;
+  background-color: transparent;
+  color: var(--tt-primary);
+  border: 2px solid;
   padding: 10px;
+  aspect-ratio: 1;
 }
