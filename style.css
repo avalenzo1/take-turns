@@ -19,11 +19,11 @@ body {
 }
 
 .t-main {
-  display: grid;
-  place-items: center;
   width: 100%;
   height: 100vh;
 }
+
+
 
 .t-nav {
   display: flex;
@@ -43,6 +43,6 @@ body {
   transition: box-shadow 0.2s;
 }
 
-.t-nav .t-btn:hover {
+.t-btn:hover {
   box-shadow: 0 2px 5px rgba(var(--tt-primary-rgb),0.25);
 }
