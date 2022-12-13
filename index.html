@@ -15,9 +15,12 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
 
     <link rel="stylesheet" href="/style.css" />
-
     <script src="/script.js" defer></script>
   </head>
   <body>
@@ -27,15 +30,16 @@
           <h1>Take Turns!</h1>
         </header>
         <div class="t-nav">
-          <button class="t-btn nav-btn__join">Join Game</button>
+          <a class="t-btn nav-btn__join" data-link="join-view">Join Game</a>
 
-          <button class="t-btn nav-btn__new">New Game</button>
+          <a class="t-btn nav-btn__new" data-link="home-view">New Game</a>
         </div>
       </div>
-      
+
       <div class="page-view" data-view="join-view">
         <nav>
-           <a href="#" data-view-link="home-view">
+          <a class="t-btn" href="#" data-link="home-view">
+            <span class="material-symbols-sharp"> arrow_back </span>
           </a>
         </nav>
       </div>
