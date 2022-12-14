@@ -52,6 +52,12 @@ body {
   padding: 1rem var(--gutter-x);
 }
 
+.t-alert {
+  position: relative;
+  background-color: var(--tt-primary);
+  color: #ffffff;
+}
+
 .t-header {
   width: 100%;
   text-align: center;

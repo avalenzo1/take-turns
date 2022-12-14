@@ -1,6 +1,22 @@
-class View {
-  constructor() {
+class Alert {
+  constructor({ id, message, type }) {
+    this.id = id;
+    this.message = message;
+    this.type = type;
     
+    this.mountAlert();
+  }
+  
+  get element() {
+    this.alert = document.createElement("div");
+    this.alert.classList.add("t-alert");
+    
+    return this.alert;
+  }
+  
+  mountAlert() {
+    this.parent = document.getElementById(this.id);
+    this.parent.appendChild(this.element);
   }
 }
 
@@ -56,4 +72,4 @@ class ViewController {
   }
 }
 
-export { ViewController };
+export { ViewController, Alert };

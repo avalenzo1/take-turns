@@ -1,18 +1,19 @@
-import { ViewController } from './components.js';
+import { ViewController, Alert } from './components.js';
 
 const socket = io();
+
+// client-side
+socket.on("connect", () => {
+  new Alert({ id: "alert-container", message: socket.id, type: "success" });
+});
+
+socket.on("disconnect", () => {
+  new Alert({ id: "alert-container", message: socket.id, type: "success" });
+});
 
 const mounts = {
   "new-view": {
     mounted(view) {
-      // client-side
-      socket.on("connect", () => {
-        console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-      });
-
-      socket.on("disconnect", () => {
-        console.log(socket.id); // undefined
-      });
     },
     
     unmounted(view) {
