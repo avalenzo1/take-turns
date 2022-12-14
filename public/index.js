@@ -1,15 +1,15 @@
 import { ViewController } from './components.js';
 
-let mountController = {
+const mounts = {
   "home-view": {
     mounted() {
-      
+      alert("home mounted");
     },
     
     unmounted() {
-    
+      alert("home unmounted");
     }
   }
 };
 
-let viewController = new ViewController({ id: "view-controller", default: "home-view", mount: mountController });
+const viewController = new ViewController({ id: "view-controller", default: "home-view", mounts: mounts });

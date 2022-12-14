@@ -5,10 +5,10 @@ class View {
 }
 
 class ViewController {
-  constructor({ id, default: defaultView, mount }) {
+  constructor({ id, default: defaultView, mounts }) {
     this.id = id;
     this.defaultView = defaultView;
-    this.callbackList = mount;
+    this.callbackList = mounts;
     
     this.initController();
   }
@@ -35,6 +35,11 @@ class ViewController {
   }
   
   mountView(view) {
+    if (this.currentView) {
+      let oldView = this.currentView.hasAttribute("data-current-view");
+      this.callbackList[oldView].unmounted();
+    }
+    
     this.viewList = this.viewController.querySelectorAll("[data-view]");
     
     for (let view of this.viewList) {
