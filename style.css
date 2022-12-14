@@ -74,12 +74,28 @@ body {
   gap: 1rem;
 }
 
+.t-share {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.t-share .t-share-field {
+  flex: 1;
+}
+
 .t-fieldset {
   position: relative;
   background-color: transparent;
   color: inherit;
   border: 2px solid;
-  padding: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.t-legend {
+  background: var(--tt-primary);
+  color: #ffffff;
+  padding: 0.25rem;
   border-radius: 0.5rem;
 }
 
