@@ -73,12 +73,6 @@ body {
   border: none;
 }
 
-.t-form {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
 .t-share {
   display: flex;
   gap: 0.5rem;
@@ -146,19 +140,11 @@ body {
   box-shadow: 0 2px 5px rgba(var(--tt-primary-rgb), 0.25);
 }
 
-.
-
-.join-main {
+.t-view {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-}
-
-.home-view {
+  padding: 1rem var(--gutter-x);
   height: 100%;
-  justify-content: space-evenly;
 }
 
 .home-nav {
@@ -168,13 +154,4 @@ body {
   width: 100%;
   justify-content: center;
   align-items: center;
-}
-
-.t-btn-ready {
-  width: 100%;
-  background: var(--tt-primary);
-  color: #ffffff;
-  border: none;
-  border-radius: 0;
-  padding: 1rem;
 }
