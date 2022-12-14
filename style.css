@@ -35,9 +35,11 @@ body {
   color: var(--tt-primary);
 }
 
-
 .t-nav {
-  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
   top: 0;
   width: 100%;
   padding: 1rem;
@@ -71,7 +73,8 @@ body {
   border-radius: 0.5rem;
 }
 
-.t-btn:hover, .t-field:focus {
+.t-btn:hover,
+.t-field:focus {
   outline: none;
   box-shadow: 0 2px 5px rgba(var(--tt-primary-rgb), 0.25);
 }
