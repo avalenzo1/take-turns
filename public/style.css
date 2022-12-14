@@ -46,6 +46,10 @@ body {
   }
 }
 
+.t-gutters {
+  padding: 1rem var(--gutter-x);
+}
+
 .t-header {
   width: 100%;
   text-align: center;
@@ -142,17 +146,13 @@ body {
   box-shadow: 0 2px 5px rgba(var(--tt-primary-rgb), 0.25);
 }
 
+.
+
 .join-main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
-}
-
-.new-main {
-  padding: 1rem;
-  width: 100%;
   flex: 1;
 }
 
