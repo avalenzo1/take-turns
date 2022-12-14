@@ -1,14 +1,14 @@
-import { ViewController, Alert } from './components.js';
+import { ViewController, Snackbar } from './components.js';
 
 const socket = io();
 
 // client-side
 socket.on("connect", () => {
-  new Alert({ id: "alert-container", message: socket.id, type: "success" });
+  new Snackbar({ id: "snackbar-container", message: "Connected! 😀", type: "success" });
 });
 
 socket.on("disconnect", () => {
-  new Alert({ id: "alert-container", message: socket.id, type: "success" });
+  new Snackbar({ id: "snackbar-container", message: "Disconnected!!?? 🤬", type: "success" });
 });
 
 const mounts = {

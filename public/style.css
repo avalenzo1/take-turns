@@ -2,6 +2,8 @@
   --font-family: "Roboto Mono", monospace;
   --tt-primary-rgb: 255, 63, 0;
   --tt-primary: rgba(var(--tt-primary-rgb), 1);
+  --tt-secondary-rgb: 50, 50, 50;
+  --tt-secondary: rgba(var(--tt-secondary-rgb), 1);
 
   --gutter-x: 25%;
   --gutter-y: 5rem;
@@ -35,13 +37,32 @@ body {
 
 .view-controller .page-view[data-current-view] {
   display: flex;
-  animation: view-slide-in 0.5s;
+  animation: slide-in 0.5s;
   perspective: 250px;
 }
 
-@keyframes view-slide-in {
+@keyframes slide-in-left {
   from {
     transform: translate(-100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+
+@keyframes slide-out-top {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, -100%);
+  }
+}
+
+@keyframes slide-in-top {
+  from {
+    transform: translate(0, -100%);
   }
   to {
     transform: translate(0, 0);
@@ -52,10 +73,22 @@ body {
   padding: 1rem var(--gutter-x);
 }
 
-.t-alert {
+.t-snackbar {
   position: relative;
-  background-color: var(--tt-primary);
+  background-color: var(--tt-secondary);
   color: #ffffff;
+  border: solid 2px;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.t-snackbar--fade-in {
+  animation: 0.25s slide-in-top;
+}
+
+.t-snackbar--fade-out {
+  animation: 0.25s slide-out-top;
 }
 
 .t-header {

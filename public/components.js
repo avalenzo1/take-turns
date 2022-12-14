@@ -1,15 +1,17 @@
-class Alert {
-  constructor({ id, message, type }) {
+class Snackbar {
+  constructor({ id, message, type, timeout }) {
     this.id = id;
-    this.message = message;
+    this.message = document.createTextNode(message);
     this.type = type;
+    this.timeout = timeout || 5000;
     
     this.mountAlert();
   }
   
   get element() {
     this.alert = document.createElement("div");
-    this.alert.classList.add("t-alert");
+    this.alert.classList.add("t-snackbar");
+    this.alert.append(this.message);
     
     return this.alert;
   }
@@ -72,4 +74,4 @@ class ViewController {
   }
 }
 
-export { ViewController, Alert };
+export { ViewController, Snackbar };
