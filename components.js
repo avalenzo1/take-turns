@@ -16,9 +16,8 @@ class ViewController {
       view.removeAttribute("data-current-view");
     }
     
-    this.currentView = this.viewList.querySelect(`[data-view='${currentView}']`);
+    this.currentView = this.viewController.querySelect(`[data-view='${currentView}']`);
     this.currentView.setAttribute("data-current-view", "");
-    
   }
 }
 
