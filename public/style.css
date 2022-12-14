@@ -50,9 +50,12 @@ body {
   top: 0;
   left: 0;
   right: 0;
+  pointer-events: none;
 }
 
-.t-snackbar-container
+.t-snackbar-container:empty {
+  padding: 0 !important;
+}
 
 .t-snackbar {
   position: relative;
