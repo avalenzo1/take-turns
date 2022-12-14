@@ -1,1 +1,3 @@
-import { ViewController } from './ViewController.js';
+import { ViewController } from './components.js';
+
+let viewController = new ViewController({ id: "view-controller" });
