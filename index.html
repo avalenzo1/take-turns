@@ -31,20 +31,20 @@
             <h1>Take Turns!</h1>
           </header>
           <nav class="home-nav">
-            <a class="t-btn nav-btn__join" data-link="join-view">Join Game</a>
+            <a class="t-btn" data-link="join-view">Join Game</a>
 
-            <a class="t-btn nav-btn__new" data-link="home-view">New Game</a>
+            <a class="t-btn" data-link="home-view">New Game</a>
           </nav>
         </div>
       </div>
 
-      <div class="page-view" data-view="join-view">
+      <div class="page-view join-view" data-view="join-view">
         <nav class="t-nav">
           <a class="t-btn" href="#" data-link="home-view">
             <span class="material-symbols-sharp">arrow_back</span>
           </a>
         </nav>
-        <header class="t-header" style="height: 50%">
+        <header class="t-header">
           <h2>Join Room</h2>
         </header>
         <form class="t-form">
@@ -55,21 +55,16 @@
         </form>
       </div>
 
-      <div class="page-view" data-view="join-view">
+      <div class="page-view" data-view="new-view">
         <nav class="t-nav">
-          <a class="t-btn" href="#" data-link="home-view">
+          <a class="t-btn" href="#" data-link="home">
             <span class="material-symbols-sharp">arrow_back</span>
           </a>
         </nav>
-        <header class="t-header" style="height: 50%">
-          <h2>Join Room</h2>
+        <header class="t-header">
+          <h2>New Game</h2>
         </header>
-        <form class="t-form">
-          <input class="t-field" />
-          <button class="t-btn">
-            <span class="material-symbols-sharp"> send </span>
-          </button>
-        </form>
+        <input class="t-field" readonly />
       </div>
     </main>
   </body>
