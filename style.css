@@ -153,3 +153,12 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.t-btn-ready {
+  width: 100%;
+  background: var(--tt-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 0;
+  padding: 1rem;
+}
