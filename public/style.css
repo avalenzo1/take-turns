@@ -3,7 +3,8 @@
   --tt-primary-rgb: 255, 63, 0;
   --tt-primary: rgba(var(--tt-primary-rgb), 1);
 
-  --gutter-x: 10%;
+  --gutter-x: 25%;
+  --gutter-y: 5rem;
 }
 
 * {
@@ -143,8 +144,21 @@ body {
 .t-view {
   display: flex;
   flex-direction: column;
+  flex: 1;
   padding: 1rem var(--gutter-x);
-  height: 100%;
+  width: 100%;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  justify-content: center;
+}
+
+.flex-grow {
+  flex: 1;
 }
 
 .home-nav {
@@ -154,4 +168,10 @@ body {
   width: 100%;
   justify-content: center;
   align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  :root {
+    --gutter-x: 1rem;
+  }
 }
