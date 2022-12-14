@@ -8,14 +8,28 @@ class ViewController {
   
   initController() {
     this.viewController = document.getElementById(this.id);
-    this.viewLinks = this.viewController.querySelectorAll()
+    this.setEvents();
     
     if (this.defaultView) {
       this.setCurrentView(this.defaultView);
     }
   }
   
+  setEvents() {
+    this.viewLinks = this.viewController.querySelectorAll("[data-link]");
+    
+    for (let link of this.viewLinks) {
+      let currentView = link.getAttribute("data-link");
+      
+      link.onclick = () => {
+        this.setCurrentView(currentView);
+      };
+    }
+  }
+  
   setCurrentView(currentView) {
+    this.viewList = this.viewController.querySelectorAll("[data-view]");
+    
     for (let view of this.viewList) {
       view.removeAttribute("data-current-view");
     }

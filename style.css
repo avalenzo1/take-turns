@@ -45,11 +45,12 @@ body {
   justify-content: space-between;
   position: sticky;
   top: 0;
-  background-color: rgba(var(--tt-primary-rgb), 0.75);
+  background-color: var(--tt-primary);
   color: #ffffff;
   width: 100%;
   padding: 0.5rem;
   z-index: 99;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 25%);
 }
 
 .t-nav .t-btn {
