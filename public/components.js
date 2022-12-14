@@ -8,14 +8,14 @@ class ViewController {
   
   initController() {
     this.viewController = document.getElementById(this.id);
-    this.setEvents();
     
     if (this.defaultView) {
       this.setCurrentView(this.defaultView);
     }
   }
   
-  setEvents() {
+  setCurrentView(currentView) {
+    this.viewList = this.viewController.querySelectorAll("[data-view]");
     this.viewLinks = this.viewController.querySelectorAll("[data-link]");
     
     for (let link of this.viewLinks) {
@@ -25,10 +25,6 @@ class ViewController {
         this.setCurrentView(currentView);
       };
     }
-  }
-  
-  setCurrentView(currentView) {
-    this.viewList = this.viewController.querySelectorAll("[data-view]");
     
     for (let view of this.viewList) {
       view.removeAttribute("data-current-view");
