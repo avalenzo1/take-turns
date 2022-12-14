@@ -13,7 +13,8 @@
 
 html,
 body,
-button {
+button,
+input {
   font-family: var(--font-family);
 }
 
@@ -106,6 +107,7 @@ body {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  font-weight: bold;
 }
 
 .t-btn {
@@ -168,6 +170,12 @@ body {
   width: 100%;
   justify-content: center;
   align-items: center;
+}
+
+.join-lookup {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 600px) {
