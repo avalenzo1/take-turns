@@ -5,9 +5,10 @@ class View {
 }
 
 class ViewController {
-  constructor({ id, default: defaultView }) {
+  constructor({ id, default: defaultView, mount }) {
     this.id = id;
     this.defaultView = defaultView;
+    this.callbackList = mount;
     
     this.initController();
   }
@@ -16,38 +17,36 @@ class ViewController {
     this.viewController = document.getElementById(this.id);
     
     if (this.defaultView) {
-      this.setCurrentView(this.defaultView);
+      this.mountView(this.defaultView);
+      this.mountEvents();
     }
   }
   
-  mounted(callbackList) {
-    this.callbackList = callbackList;
-  }
-  
-  setCurrentView(currentView) {
-    this.viewList = this.viewController.querySelectorAll("[data-view]");
+  mountEvents() {
     this.viewLinks = this.viewController.querySelectorAll("[data-link]");
     
     for (let link of this.viewLinks) {
-      let currentView = link.getAttribute("data-link");
+      let view = link.getAttribute("data-link");
       
       link.onclick = () => {
-        this.setCurrentView(currentView);
+        this.mountView(view);
       };
     }
+  }
+  
+  mountView(view) {
+    this.viewList = this.viewController.querySelectorAll("[data-view]");
     
     for (let view of this.viewList) {
       view.removeAttribute("data-current-view");
     }
     
-    this.currentView = this.viewController.querySelector(`[data-view='${currentView}']`);
+    this.currentView = this.viewController.querySelector(`[data-view='${view}']`);
     this.currentView.setAttribute("data-current-view", "");
     
-    console.log(this.callbackList);
-    
-    // if (this.callbackList[currentView]) {
-    //   this.callbackList[currentView]();
-    // }
+    if (this.callbackList[view]) {
+      this.callbackList[view].mounted();
+    }
   }
 }
 
