@@ -41,54 +41,34 @@ body {
   perspective: 250px;
 }
 
-@keyframes slide-in-left {
-  from {
-    transform: translate(-100%, 0);
-  }
-  to {
-    transform: translate(0, 0);
-  }
-}
-
-
-@keyframes slide-out-top {
-  from {
-    transform: translate(0, 0);
-  }
-  to {
-    transform: translate(0, -100%);
-  }
-}
-
-@keyframes slide-in-top {
-  from {
-    transform: translate(0, -100%);
-  }
-  to {
-    transform: translate(0, 0);
-  }
-}
-
 .t-gutters {
-  padding: 1rem var(--gutter-x);
+  padding: var(--gutter-y) var(--gutter-x);
 }
+
+.t-snackbar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.t-snackbar-container
 
 .t-snackbar {
   position: relative;
   background-color: var(--tt-secondary);
   color: #ffffff;
-  border: solid 2px;
   width: 100%;
   padding: 1rem;
   border-radius: 0.5rem;
 }
 
 .t-snackbar--fade-in {
-  animation: 0.25s slide-in-top;
+  animation: 0.25s slide-in-top, 0.5s fade-in;
 }
 
 .t-snackbar--fade-out {
-  animation: 0.25s slide-out-top;
+  animation: 0.25s slide-out-top, 0.5s fade-out;
 }
 
 .t-header {
@@ -215,6 +195,51 @@ body {
   display: flex;
   gap: 1rem;
   justify-content: center;
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translate(-100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes slide-out-top {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, -100%);
+  }
+}
+
+@keyframes slide-in-top {
+  from {
+    transform: translate(0, -100%);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @media only screen and (max-width: 600px) {

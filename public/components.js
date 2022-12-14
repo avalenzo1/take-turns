@@ -2,7 +2,7 @@ class Snackbar {
   constructor({ id, message, type, timeout }) {
     this.id = id;
     this.message = document.createTextNode(message);
-    this.type = type;
+    this.type = type || "info";
     this.timeout = timeout || 5000;
     
     this.mountAlert();
@@ -11,7 +11,20 @@ class Snackbar {
   get element() {
     this.alert = document.createElement("div");
     this.alert.classList.add("t-snackbar");
+    this.alert.classList.add("t-snackbar--fade-in");
     this.alert.append(this.message);
+    
+    this.alert.addEventListener('animationend', () => {
+      if (this.alert.classList.contains("t-snackbar--fade-in")) {
+        this.alert.classList.remove("t-snackbar--fade-in");
+        
+        setTimeout(() => {
+          this.alert.classList.add("t-snackbar--fade-out");
+        }, this.timeout);
+      } else {
+        this.alert.remove();
+      }
+    });
     
     return this.alert;
   }
