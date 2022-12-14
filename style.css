@@ -27,12 +27,12 @@ body {
   position: relative;
   width: 100%;
   height: 100vh;
+  color: var(--tt-primary);
 }
 
 .t-header {
   width: 100%;
   text-align: center;
-  color: var(--tt-primary);
 }
 
 .t-nav {
@@ -41,8 +41,15 @@ body {
   justify-content: space-between;
   position: sticky;
   top: 0;
+  background-color: rgba(var(--tt-primary-rgb), 0.75);
+  color: #ffffff;
   width: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
+  z-index: 99;
+}
+
+.t-nav .t-btn {
+  border: none;
 }
 
 .t-form {
@@ -54,7 +61,7 @@ body {
 .t-field {
   position: relative;
   background-color: transparent;
-  color: var(--tt-primary);
+  color: inherit;
   border: 2px solid;
   padding: 10px;
   transition: box-shadow 0.2s;
@@ -65,7 +72,7 @@ body {
   display: inline-block;
   position: relative;
   background-color: transparent;
-  color: var(--tt-primary);
+  color: inherit;
   cursor: pointer;
   border: 2px solid;
   padding: 0.5rem;
@@ -84,6 +91,12 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex: 1;
+}
+
+.new-main {
+  padding: 1rem;
+  width: 100%;
   flex: 1;
 }
 
