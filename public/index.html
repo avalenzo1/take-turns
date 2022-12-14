@@ -4,12 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#FF3F00" />
-    <link rel="icon" href="https://glitch.com/favicon.ico" />
-    <title>Take Turns!</title>
-
-    <link rel="canonical" href="https://take-turns.glitch.me/" />
     <meta name="description" content="tba" />
-
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <link rel="canonical" href="https://take-turns.glitch.me/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,9 +17,9 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0"
     />
-
     <link rel="stylesheet" href="/style.css" />
-    <script src="/script.js" type="module" defer></script>
+    <script src="/index.js" type="module" defer></script>
+    <title>Take Turns!</title>
   </head>
   <body>
     <main id="view-controller" class="view-controller">
@@ -52,8 +49,8 @@
           </header>
           <form class="t-form">
             <input class="t-field" />
-            <button class="t-btn">
-              <span class="material-symbols-sharp"> send </span>
+            <button type="submit" class="t-btn">
+              <span class="material-symbols-sharp">send</span>
             </button>
           </form>
         </div>
@@ -75,7 +72,7 @@
               readonly
             />
             <button class="t-btn t-share-button">
-              <span class="material-symbols-sharp"> content_copy </span>
+              <span class="material-symbols-sharp">share</span>
             </button>
           </fieldset>
           <h3>Players (<span id="game-player-count">0</span>)</h3>
