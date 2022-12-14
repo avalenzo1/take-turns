@@ -1,3 +1,9 @@
+class View {
+  constructor() {
+    
+  }
+}
+
 class ViewController {
   constructor({ id, default: defaultView }) {
     this.id = id;
@@ -12,6 +18,10 @@ class ViewController {
     if (this.defaultView) {
       this.setCurrentView(this.defaultView);
     }
+  }
+  
+  mounted(callbackList) {
+    this.callbackList = callbackList;
   }
   
   setCurrentView(currentView) {
@@ -32,6 +42,12 @@ class ViewController {
     
     this.currentView = this.viewController.querySelector(`[data-view='${currentView}']`);
     this.currentView.setAttribute("data-current-view", "");
+    
+    console.log(this.callbackList);
+    
+    // if (this.callbackList[currentView]) {
+    //   this.callbackList[currentView]();
+    // }
   }
 }
 
