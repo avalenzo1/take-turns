@@ -32,6 +32,16 @@ body {
 
 .view-controller .page-view[data-current-view] {
   display: flex;
+  animation: view-slide-in 1s;
+}
+
+@keyframes view-slide-in {
+  from {
+    transform: translate(100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
 }
 
 .t-header {
