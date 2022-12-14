@@ -74,13 +74,21 @@ body {
   gap: 1rem;
 }
 
+.t-fieldset {
+  position: relative;
+  background-color: transparent;
+  color: inherit;
+  border: 2px solid;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
 .t-field {
   position: relative;
   background-color: transparent;
   color: inherit;
   border: 2px solid;
-  padding: 10px;
-  transition: box-shadow 0.2s;
+  padding: 0.5rem;
   border-radius: 0.5rem;
 }
 
