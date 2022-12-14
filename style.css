@@ -32,13 +32,13 @@ body {
 
 .view-controller .page-view[data-current-view] {
   display: flex;
-  animation: view-slide-in 1s;
+  animation: view-slide-in 0.5s;
   perspective: 250px;
 }
 
 @keyframes view-slide-in {
   from {
-    transform: translate(0, -100%);
+    transform: translate(-100%, 0);
   }
   to {
     transform: translate(0, 0);
