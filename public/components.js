@@ -36,8 +36,9 @@ class ViewController {
   
   mountView(view) {
     if (this.currentView) {
-      let oldView = this.currentView.hasAttribute("data-current-view");
-      this.callbackList[oldView].unmounted();
+      let oldView = this.currentView.getAttribute("data-view");
+      
+      if (this.callbackList[oldView] && this.callbackList[oldView].unmounted) this.callbackList[oldView].unmounted(this.currentView);
     }
     
     this.viewList = this.viewController.querySelectorAll("[data-view]");
@@ -49,8 +50,8 @@ class ViewController {
     this.currentView = this.viewController.querySelector(`[data-view='${view}']`);
     this.currentView.setAttribute("data-current-view", "");
     
-    if (this.callbackList[view]) {
-      this.callbackList[view].mounted();
+    if (this.callbackList[view] && this.callbackList[view].mounted) {
+      this.callbackList[view].mounted(this.currentView);
     }
   }
 }

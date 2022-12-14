@@ -156,7 +156,7 @@ body {
 }
 
 .align-center {
-  justify-content: center;
+  align-items: center;
 }
 
 .flex-grow {
