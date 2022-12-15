@@ -10,13 +10,11 @@ const controller = new ViewController({
 
 controller.mount({
   "home-view": {
-    mounted(view) {},
-
-    unmounted(view) {},
+    mounted() {},
   },
 
   "new-view": {
-    mounted(view) {
+    mounted() {
       socket.emit("server/new-room");
       new Snackbar({
         id: "snackbar-container",
@@ -24,8 +22,6 @@ controller.mount({
         type: "success",
       });
     },
-
-    unmounted(view) {},
   },
 
   "join-view": {
@@ -50,26 +46,11 @@ controller.mount({
   },
 
   "lobby-view": {
-    events: {
-      details(details) {
-        shareData.url = input.value =
-          "https://take-turns.glitch.me/?join=" + details.uid;
-        list.innerHTML = "";
-
-        counter.innerHTML = details.playerList.length;
-
-        for (let player of details.playerList) {
-          let li = document.createElement("li");
-
-          li.innerHTML = player.name + " - " + player.ready;
-
-          list.appendChild(li);
-        }
-
-        game.uid = details.uid;
-      }
-    },
     mounted() {
+      let input = document.getElementById("new-view/room-url");
+      let share = document.getElementById("new-view/room-share");
+      let list = document.getElementById("new-view/player-list");
+      let counter = document.getElementById("new-view/player-count");
       let ready = document.getElementById("new-view/player-ready");
 
       let shareData = {
@@ -95,12 +76,31 @@ controller.mount({
           type: "success",
         });
       });
-
+      
       ready.addEventListener("click", () => {
         socket.emit("server/player-ready", game.uid);
+        ready.setAttribute("disabled", "");
       });
+      
+      socket.emit("server/room-details");
 
-      socket.once("server/room-details", this.events.details);
+      socket.on("server/room-details", function (details) {
+        shareData.url = input.value =
+          "https://take-turns.glitch.me/?join=" + details.uid;
+        list.innerHTML = "";
+
+        counter.innerHTML = details.playerList.length;
+
+        for (let player of details.playerList) {
+          let li = document.createElement("li");
+
+          li.innerHTML = player.name + " - " + player.ready;
+
+          list.appendChild(li);
+        }
+
+        game.uid = details.uid;
+      });
     },
   },
 });
