@@ -16,6 +16,14 @@ app.get("/", (req, res) => {
 
 const lobby = new Lobby();
 
+// main namespace
+const rooms = io.of("/").adapter.rooms;
+const sids = io.of("/").adapter.sids;
+
+io.of("/").adapter.on("join-room", (room, id) => {
+  console.log(`socket ${id} has joined room ${room}`);
+});
+
 io.on("connection", (socket) => {
   socket.on("server/new-room", function() {
     const room = new Room({ owner: socket.id });
@@ -31,6 +39,7 @@ io.on("connection", (socket) => {
     const player = new Player({ id: socket.id });
     const response = lobby.join(player, roomUID);
     
+    socket.join(roomUID);
     socket.emit("server/join-room", response);
   });
 });
