@@ -62,13 +62,21 @@ controller.mount({
 
 (function () {
   let input = document.getElementById("new-view/room-url");
+  let share = document.getElementById("new-view/room-share");
   let list = document.getElementById("new-view/player-list");
   let counter = document.getElementById("new-view/player-count");
+  let shareData = {
+    title: 'Take Turns',
+    text: 'Play Take Turns with Me!',
+    url: 'https://take-turns.glitch.me/?join='
+  };
+  
+  share.addEventListener('click', async () => {
+    await navigator.share(shareData);
+  });
 
   socket.on("server/room-details", function (details) {
-    console.log(details);
-
-    input.value = "https://take-turns.glitch.me/?join=" + details.uid;
+    shareData.url = input.value = "https://take-turns.glitch.me/?join=" + details.uid;
     list.innerHTML = "";
 
     counter.innerHTML = details.playerList.length;

@@ -5,7 +5,7 @@ function UID() {
 class Player {
   constructor({ name, id }) {
     this.id = id;
-    this.name = `Player`;
+    this.name = `Player #` + this.id;
     this.ready = false;
   }
 }
