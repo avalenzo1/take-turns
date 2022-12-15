@@ -23,6 +23,26 @@ controller.mount({
       
     }
   },
+  
+  "join-view": {
+    elements: {
+      input: document.getElementById("join-view/room-input"),
+      submit: document.getElementById("join-view/room-submit")
+    },
+    events: {
+      submit: (e) => {
+        e.preventDefault();
+        socket.emit("server/join-room", this.elements.input.value);
+      }
+    },
+    mounted(view) {
+      console.log(this.elements)
+      this.elements.submit.addEventListener("click", this.events.submit);
+    },
+    unmounted(view) {
+      this.elements.submit.removeEventListener("click", this.events.submit);
+    }
+  },
       
   "lobby-view": {
     mounted(view) {
