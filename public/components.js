@@ -3,7 +3,7 @@ class Snackbar {
     this.id = id;
     this.message = document.createTextNode(message);
     this.type = type || "info";
-    this.timeout = timeout || 5000;
+    this.timeout = timeout || 2000;
     
     this.mountAlert();
   }

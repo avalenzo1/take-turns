@@ -20,10 +20,6 @@ const lobby = new Lobby();
 const rooms = io.of("/").adapter.rooms;
 const sids = io.of("/").adapter.sids;
 
-io.of("/").adapter.on("join-room", (room, id) => {
-  console.log(`socket ${id} has joined room ${room}`);
-});
-
 io.on("connection", (socket) => {
   socket.on("server/new-room", function() {
     const room = new Room({ owner: socket.id });
@@ -31,6 +27,11 @@ io.on("connection", (socket) => {
     socket.emit("server/new-room", room.uid);
     
     lobby.mountRoom(room);
+  });
+  
+  io.of("/").adapter.on("join-room", (room, id) => {
+    console.log(`socket ${id} has joined room ${room}`);
+    socket.to(room).emit("server/room-details", lobby.find(room.details));
   });
   
   socket.on("server/join-room", function(roomUID) {

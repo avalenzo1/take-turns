@@ -5,6 +5,7 @@ function UID() {
 class Player {
   constructor({ id }) {
     this.id = id;
+    this.ready = false;
   }
 }
 
@@ -13,16 +14,22 @@ class Lobby {
     this.roomList = [];
   }
   
-  join(player, UID) {
+  find(UID) {
     let room = this.roomList.filter(r => {
       return r.uid === UID;
     });
     
-    if (room.length === 0) {
-      return { type: 'error', message: 'Room Does Not Exist' };
+    if (room.length > 0) {
+      return room[0];
     }
     
-    if (room[0] instanceof Room) {
+    return;
+  }
+  
+  join(player, UID) {
+    let room = this.find(UID);
+    
+    if (room instanceof Room) {
       room.join(player);
       
       return { type: 'success' };
@@ -52,7 +59,11 @@ class Room {
   }
   
   get details() {
-    return { playerList: this.playerList };
+    return {
+      owner: this.owner,
+      playerList: this.playerList,
+      uid: this.uid
+    };
   }
 }
 

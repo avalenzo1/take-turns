@@ -27,6 +27,10 @@ controller.mount({
   "lobby-view": {
     mounted(view) {
       
+    },
+    
+    unmounted(view) {
+      
     }
   }
 });
