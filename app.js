@@ -45,14 +45,6 @@ io.on("connection", (socket) => {
     }
   });
   
-  socket.on("server/player-ready", function() {
-    const room = new Room({ owner: socket.id });
-    
-    socket.emit("server/new-room", room.uid);
-    
-    lobby.mountRoom(room);
-  });
-  
   socket.on("server/new-room", function() {
     const room = new Room({ owner: socket.id });
     
@@ -61,7 +53,19 @@ io.on("connection", (socket) => {
     lobby.mountRoom(room);
   });
   
+  socket.on("server/player-ready", function(uid) {
+    
+    let groom = lobby.fetchRoom(uid);
+    let player = groom.fetchPlayer(id);
+    
+    if (groom instanceof Room) {
+      socket.to(uid).emit("server/room-details", groom.details);
+    }
+  });
+  
   socket.on("server/join-room", function(roomUID) {
+    console.log(roomUID);
+    
     const player = new Player({ id: socket.id });
     const response = lobby.join(player, roomUID);
     

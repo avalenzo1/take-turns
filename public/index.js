@@ -82,7 +82,8 @@ controller.mount({
   });
   
   ready.addEventListener('click', () => {
-    socket.emit("server/player-ready");
+    socket.emit("server/player-ready", game.uid);
+    ready.setAttribute("disabled", "");
   });
 
   socket.on("server/room-details", function (details) {
@@ -94,12 +95,12 @@ controller.mount({
     for (let player of details.playerList) {
       let li = document.createElement("li");
 
-      li.innerHTML = player.name;
+      li.innerHTML = player.name + " - " + player.ready;
 
       list.appendChild(li);
     }
     
-    game.
+    game.uid = details.uid;
   });
 })();
 

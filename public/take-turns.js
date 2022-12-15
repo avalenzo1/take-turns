@@ -1,7 +1,6 @@
 class Game {
-  constructor(room) {
-    this.room = room;
-    
+  constructor(uid) {
+    this.uid = uid;
   }
   
 }
