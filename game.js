@@ -54,12 +54,12 @@ class Room {
   }
   
   fetchPlayer(id) {
-    let room = this.roomList.filter(r => {
-      return r.uid === UID;
+    let player = this.playerList.filter(p => {
+      return p.uid === UID;
     });
     
-    if (room.length > 0) {
-      return room[0];
+    if (player.length > 0) {
+      return player[0];
     }
     
     return;
