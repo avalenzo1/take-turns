@@ -47,7 +47,24 @@ controller.mount({
 
   "lobby-view": {
     mounted() {
-      let input = document.getElementById("new-view/room-url");
+
+    },
+  },
+});
+
+(function () {
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+  const roomUID = params.join;
+
+  if (roomUID) {
+    socket.emit("server/join-room", roomUID);
+  }
+})();
+
+(function() {
+        let input = document.getElementById("new-view/room-url");
       let share = document.getElementById("new-view/room-share");
       let list = document.getElementById("new-view/player-list");
       let counter = document.getElementById("new-view/player-count");
@@ -101,19 +118,6 @@ controller.mount({
 
         game.uid = details.uid;
       });
-    },
-  },
-});
-
-(function () {
-  const params = new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
-  });
-  const roomUID = params.join;
-
-  if (roomUID) {
-    socket.emit("server/join-room", roomUID);
-  }
 })();
 
 socket.on("server/new-room", function (roomUID) {
