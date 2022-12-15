@@ -65,6 +65,8 @@ io.on("connection", (socket) => {
   socket.on("server/player-ready", function(uid) {
     let groom = lobby.fetchRoom(uid);
     
+    console.log("player ready");
+    
     if (groom instanceof Room) {
       let player = groom.fetchPlayer(socket.id);
       
@@ -72,7 +74,9 @@ io.on("connection", (socket) => {
         player.ready = true;
       }
       
-      socket.to(uid).emit("server/room-details", groom.details);
+      
+      
+      fetchDetails(uid);
     }
   });
   

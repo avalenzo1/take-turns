@@ -141,6 +141,9 @@ body {
 }
 
 .t-btn {
+  --bg-tint: var(--tt-primary);
+  --color-tint: inherit;
+  
   display: inline-block;
   position: relative;
   background-color: transparent;
@@ -150,6 +153,11 @@ body {
   padding: 0.5rem;
   transition: box-shadow 0.2s;
   border-radius: 0.5rem;
+}
+
+.t-btn:disabled {
+  background-color: #cfcfcf;
+  color: #bfbfbf;
 }
 
 .t-btn--prominent {
