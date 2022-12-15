@@ -46,9 +46,7 @@ controller.mount({
   },
 
   "lobby-view": {
-    mounted() {
-
-    },
+    mounted() {},
   },
 });
 
@@ -63,61 +61,63 @@ controller.mount({
   }
 })();
 
-(function() {
-        let input = document.getElementById("new-view/room-url");
-      let share = document.getElementById("new-view/room-share");
-      let list = document.getElementById("new-view/player-list");
-      let counter = document.getElementById("new-view/player-count");
-      let ready = document.getElementById("new-view/player-ready");
+(function () {
+  let input = document.getElementById("new-view/room-url");
+  let share = document.getElementById("new-view/room-share");
+  let list = document.getElementById("new-view/player-list");
+  let counter = document.getElementById("new-view/player-count");
+  let ready = document.getElementById("new-view/player-ready");
 
-      let shareData = {
-        title: "Take Turns",
-        text: "Play Take Turns with Me!",
-        url: "https://take-turns.glitch.me/?join=",
-      };
+  let shareData = {
+    title: "Take Turns",
+    text: "Play Take Turns with Me!",
+    url: "https://take-turns.glitch.me/?join=",
+  };
 
-      share.addEventListener("click", async () => {
-        await navigator.share(shareData);
-      });
+  share.addEventListener("click", async () => {
+    await navigator.share(shareData);
+  });
 
-      input.addEventListener("click", () => {
-        input.select();
-        input.setSelectionRange(0, 99999); // For mobile devices
+  input.addEventListener("click", () => {
+    input.select();
+    input.setSelectionRange(0, 99999); // For mobile devices
 
-        // Copy the text inside the text field
-        navigator.clipboard.writeText(input.value);
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(input.value);
 
-        new Snackbar({
-          id: "snackbar-container",
-          message: "Copied Link",
-          type: "success",
-        });
-      });
-      
-      ready.addEventListener("click", () => {
-        socket.emit("server/player-ready", game.uid);
-        ready.setAttribute("disabled", "");
-      });
-      
-      socket.emit("server/room-details", game.uid);
+    new Snackbar({
+      id: "snackbar-container",
+      message: "Copied Link",
+      type: "success",
+    });
+  });
 
-      socket.on("server/room-details", function (details) {
-        shareData.url = input.value =
-          "https://take-turns.glitch.me/?join=" + details.uid;
-        list.innerHTML = "";
+  ready.addEventListener("click", () => {
+    socket.emit("server/player-ready", game.uid);
+    ready.setAttribute("disabled", "");
+  });
 
-        counter.innerHTML = details.playerList.length;
+  socket.on("server/room-details", function (details) {
+    shareData.url = input.value =
+      "https://take-turns.glitch.me/?join=" + details.uid;
+    list.innerHTML = "";
 
-        for (let player of details.playerList) {
-          let li = document.createElement("li");
+    counter.innerHTML = details.playerList.length;
 
-          li.innerHTML = player.name + " - " + player.ready;
+    for (let player of details.playerList) {
+      let li = document.createElement("li");
 
-          list.appendChild(li);
-        }
+      li.innerHTML = player.name + " - " + player.ready;
 
-        game.uid = details.uid;
-      });
+      list.appendChild(li);
+    }
+
+    game.uid = details.uid;
+
+    console.log(details);
+  });
+
+  socket.emit("server/room-details", game.uid);
 })();
 
 socket.on("server/new-room", function (roomUID) {

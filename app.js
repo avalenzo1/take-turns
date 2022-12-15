@@ -40,25 +40,25 @@ io.on("connection", (socket) => {
     socket.emit("server/join-room", response);
   }
   
-  function leaveRoom(uid) {
+  function leaveRoom(player_id, uid) {
     let room = lobby.fetchRoom(uid);
     
     if (room instanceof Room) {
-      room.leave(uid);
+      room.leave(player_id);
       fetchDetails(uid);
     }
   }
   
-  io.of("/").adapter.on("join-room", (room, id) => {
-    console.log(`socket ${id} has joined room ${room}`);
+  io.of("/").adapter.on("join-room", (roomID, playerID) => {
+    console.log(`socket ${playerID} has joined room ${roomID}`);
     
-    fetchDetails(room);
+    fetchDetails(roomID);
   });
   
-  io.of("/").adapter.on("leave-room", (room, id) => {
-    console.log(`socket ${id} has left room ${room}`);
+  io.of("/").adapter.on("leave-room", (roomID, playerID) => {
+    console.log(`socket ${playerID} has left room ${roomID}`);
     
-    leaveRoom(room);
+    leaveRoom(playerID, roomID);
   });
   
   socket.on("server/new-room", function() {
