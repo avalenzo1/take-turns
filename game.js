@@ -3,8 +3,9 @@ function UID() {
 }
 
 class Player {
-  constructor({ id }) {
+  constructor({ name, id }) {
     this.id = id;
+    this.name = `Player`;
     this.ready = false;
   }
 }
@@ -14,7 +15,7 @@ class Lobby {
     this.roomList = [];
   }
   
-  find(uid) {
+  fetchRoom(uid) {
     let room = this.roomList.filter(r => {
       return r.uid === uid;
     });
@@ -27,7 +28,7 @@ class Lobby {
   }
   
   join(player, uid) {
-    let room = this.find(uid);
+    let room = this.fetchRoom(uid);
     
     if (room instanceof Room) {
       room.join(player);
@@ -75,11 +76,9 @@ class Room {
   }
   
   leave(id) {
-    let i = this.fetchIndex(id);
+    const playerIndex = this.fetchIndex(id);
     
-    if (i > 0) {
-      this.playerList[i]
-    }
+    if (playerIndex > -1) this.playerList.splice(playerIndex, 1);
   }
   
   get details() {
