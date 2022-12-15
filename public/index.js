@@ -28,10 +28,11 @@ controller.mount({
     },
     events: {
       submit(e) {
+        
         e.preventDefault();
         socket.emit(
           "server/join-room",
-          document.getElementById("join-view/room-input")
+          document.getElementById("join-view/room-input").value
         );
       },
     },
