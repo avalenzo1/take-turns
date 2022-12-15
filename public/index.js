@@ -2,13 +2,24 @@ import { ViewController, Snackbar, clearEvents } from "./components.js";
 import { Game } from "./take-turns.js";
 
 const socket = io();
+const game = new Game();
 const controller = new ViewController({
   id: "view-controller",
   default: "home-view",
 });
-const game = new Game();
+
 
 controller.mount({
+  "home-view": {
+    mounted(view) {
+      
+    },
+    
+    unmounted(view) {
+
+    }
+  },
+  
   "new-view": {
     mounted(view) {
       socket.emit("server/new-room");
@@ -19,7 +30,9 @@ controller.mount({
       });
     },
 
-    unmounted(view) {},
+    unmounted(view) {
+      
+    },
   },
 
   "join-view": {

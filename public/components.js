@@ -49,7 +49,6 @@ class ViewController {
     
     if (this.defaultView) {
       this.mountView(this.defaultView);
-      this.mountEvents();
     }
   }
   
@@ -57,9 +56,16 @@ class ViewController {
     this.callbackList = callbackList;
   }
   
-  mountEvents() {
-    this.viewLinks = this.viewController.querySelectorAll("[data-link]");
-    
+  beforeMount() {
+     if (this.currentView) {
+      let oldView = this.currentView.getAttribute("data-view");
+      clearEvents(this.currentView);
+      
+      if (this.callbackList[oldView] && this.callbackList[oldView].unmounted) this.callbackList[oldView].unmounted(this.currentView);
+    }
+  }
+  
+  afterMount(view) {
     for (let link of this.viewLinks) {
       let view = link.getAttribute("data-link");
       
@@ -67,15 +73,20 @@ class ViewController {
         this.mountView(view);
       });
     }
+    // mount
+    
+    if (this.callbackList[view] && this.callbackList[view].mounted) {
+      this.callbackList[view].mounted(this.currentView);
+    }
+  }
+  
+  mountLinks(view) {
+    
   }
   
   mountView(view) {
-    if (this.currentView) {
-      let oldView = this.currentView.getAttribute("data-view");
-      clearEvents(this.currentView);
-      
-      if (this.callbackList[oldView] && this.callbackList[oldView].unmounted) this.callbackList[oldView].unmounted(this.currentView);
-    }
+    // unmount
+    this.beforeMount();
     
     this.viewList = this.viewController.querySelectorAll("[data-view]");
     
@@ -86,9 +97,7 @@ class ViewController {
     this.currentView = this.viewController.querySelector(`[data-view='${view}']`);
     this.currentView.setAttribute("data-current-view", "");
     
-    if (this.callbackList[view] && this.callbackList[view].mounted) {
-      this.callbackList[view].mounted(this.currentView);
-    }
+    this.viewLinks = this.currentView.querySelectorAll("[data-link]");
   }
 }
 
@@ -100,9 +109,11 @@ function getDescendantNodes(node, all = []) {
 }
 
 function clearEvents(parent) {
-  this.nodes = getDescendantNodes(parent);
+  let nodes = [];
   
-  for (let node of this.nodes) {
+  getDescendantNodes(parent, nodes);
+  
+  for (let node of nodes) {
     let clone = node.cloneNode(true);
     node.parentNode.replaceChild(clone, node);
   }
