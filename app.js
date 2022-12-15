@@ -26,16 +26,31 @@ io.on("connection", (socket) => {
   }
   
   function createRoom() {
+    const room = new Room({ owner: socket.id });
     
+    socket.emit("server/new-room", room.uid);
+    
+    lobby.mountRoom(room);
   }
   
-  function joinRoom() {
+  function joinRoom(uid) {
+    const player = new Player({ id: socket.id });
+    const response = lobby.join(player, uid);
     
+    socket.join(uid);
+    socket.emit("server/join-room", response);
   }
   
-  function leaveRoom() {
+  function leaveRoom(uid) {
+    let room = lobby.fetchRoom(uid);
     
+    if (room instanceof Room) {
+      room.leave(uid);
+      fetchDetails(uid);
+    }
   }
+  
+  
   
   io.of("/").adapter.on("join-room", (room, id) => {
     console.log(`socket ${id} has joined room ${room}`);
@@ -46,26 +61,19 @@ io.on("connection", (socket) => {
   io.of("/").adapter.on("leave-room", (room, id) => {
     console.log(`socket ${id} has left room ${room}`);
     
-    let groom = lobby.fetchRoom(room);
-    
-    if (groom instanceof Room) {
-      groom.leave(id);
-      fetchDetails(room);
-    }
+    leaveRoom(room);
   });
   
   socket.on("server/new-room", function() {
-    const room = new Room({ owner: socket.id });
-    
-    socket.emit("server/new-room", room.uid);
-    
-    lobby.mountRoom(room);
+    createRoom();
+  });
+  
+  socket.on("server/room-details", function(uid) {
+    fetchDetails(uid);
   });
   
   socket.on("server/player-ready", function(uid) {
     let groom = lobby.fetchRoom(uid);
-    
-    console.log("player ready");
     
     if (groom instanceof Room) {
       let player = groom.fetchPlayer(socket.id);
@@ -74,18 +82,12 @@ io.on("connection", (socket) => {
         player.ready = true;
       }
       
-      
-      
       fetchDetails(uid);
     }
   });
   
   socket.on("server/join-room", function(uid) {
-    const player = new Player({ id: socket.id });
-    const response = lobby.join(player, uid);
-    
-    socket.join(uid);
-    socket.emit("server/join-room", response);
+    joinRoom(uid);
   });
   
   socket.on("disconnect", () => {

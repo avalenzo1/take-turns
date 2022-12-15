@@ -82,7 +82,7 @@ controller.mount({
         ready.setAttribute("disabled", "");
       });
       
-      socket.emit("server/room-details");
+      socket.emit("server/room-details", game.uid);
 
       socket.on("server/room-details", function (details) {
         shareData.url = input.value =

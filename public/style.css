@@ -157,7 +157,11 @@ body {
 
 .t-btn:disabled {
   background-color: #cfcfcf;
-  color: #bfbfbf;
+  color: #333333;
+}
+
+.t-btn:disabled:hover {
+  box-shadow: none;
 }
 
 .t-btn--prominent {
