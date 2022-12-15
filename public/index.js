@@ -30,9 +30,19 @@ controller.mount({
   }
 });
 
-socket.on("server/join-room", function(room) {
-  new Snackbar({ id: "snackbar-container", message: "Joined Room", type: "success" });
-  controller.mountView("lobby-view");
+socket.on("server/room-details", function (details) {
+  
+});
+
+socket.on("server/join-room", function(res) {
+  switch (res.type) {
+    case 'success':
+      new Snackbar({ id: "snackbar-container", message: "Joined Room", type: "success" });
+      controller.mountView("lobby-view");
+      break;
+    case 'error':
+      new Snackbar({ id: "snackbar-container", message: res.message, type: "danger" });
+  }
 });
 
 // client-side

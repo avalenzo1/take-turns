@@ -18,12 +18,17 @@ class Lobby {
       return r.uid === UID;
     });
     
-    if (room instanceof Room) {
-      room.join(player);
-      return 'success';
+    if (room.length === 0) {
+      return { type: 'error', message: 'Room Does Not Exist' };
     }
     
-    return 'error';
+    if (room[0] instanceof Room) {
+      room.join(player);
+      
+      return { type: 'success' };
+    }
+    
+    return { type: 'error', message: `R̷̗̼̆̈͗͊o̷͕̬̕o̵͎̩̠͐́̉̿m̴̻͓͝ ̸̩̾Ḋ̵̛̛͓̓ö̷͚ė̶͎̞̄̓s̵̱͛̓ ̷̤͉̝́̈́̈́̌N̸͍̣̍̐ǫ̷̛̣̠̓͒ẗ̷̡͖́͒ ̵̡͖̫̉̀E̸͍̝̋̅̕ẍ̷̘́ì̶̥s̵͈͛t̴͓̻̮͝` };
   }
   
   mountRoom(room) {

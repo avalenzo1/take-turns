@@ -29,15 +29,9 @@ io.on("connection", (socket) => {
     console.log(roomUID);
     
     const player = new Player({ id: socket.id });
+    const response = lobby.join(player, roomUID);
     
-    switch (lobby.join(player, roomUID)) {
-      case 'success':
-        socket.emit("server/join-room", { type: 'success' });
-        break;
-      case 'error':
-        socket.emit("server/join-room", { type: 'error' });
-        break;
-    }
+    socket.emit("server/join-room", response);
   });
 });
 
