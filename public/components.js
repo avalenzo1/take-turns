@@ -62,19 +62,26 @@ class ViewController {
   }
 
   beforeMount() {
-    if (this.currentView) {
-      let view = this.currentView.getAttribute("data-view");
-      clearEvents(this.currentView);
+    this.previousView = this.currentView;
+    
+    if (this.previousView) {
+      let view = this.previousView.getAttribute("data-view");
 
+      clearEvents(this.previousView);
+      
       if (this.callbackList[view] && this.callbackList[view].unmounted) {
         this.callbackList[view].unmounted(this.currentView);
       }
     }
   }
 
-  afterMount(view) {
-    if (this.callbackList[view] && this.callbackList[view].mounted) {
-      this.callbackList[view].mounted(this.currentView);
+  afterMount() {
+    if (this.currentView) {
+      let view = this.currentView.getAttribute("data-view");
+      
+      if (this.callbackList[view] && this.callbackList[view].mounted) {
+        this.callbackList[view].mounted(this.currentView);
+      }
     }
   }
 
@@ -89,8 +96,6 @@ class ViewController {
   }
 
   mountView(view) {
-    this.previousView = this.currentView;
-    
     // View Unmounted
     this.beforeMount();
 
@@ -108,7 +113,7 @@ class ViewController {
     this.viewLinks = this.currentView.querySelectorAll("[data-link]");
 
     this.mountLinks();
-    this.afterMount(view);
+    this.afterMount();
   }
 }
 

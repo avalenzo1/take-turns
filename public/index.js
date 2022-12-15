@@ -23,6 +23,7 @@ controller.mount({
   "new-view": {
     mounted(view) {
       socket.emit("server/new-room");
+      
       new Snackbar({
         id: "snackbar-container",
         message: "Creating Room",
@@ -51,21 +52,8 @@ controller.mount({
     },
     mounted(view) {
       this.elements.submit.addEventListener("click", this.events.submit);
-    },
-    unmounted(view) {
-      this.elements.submit.removeEventListener("click", this.events.submit);
-    },
-  },
-
-  "lobby-view": {
-    mounted(view) {},
-
-    unmounted(view) {},
-  },
-});
-
-(function () {
-  let input = document.getElementById("new-view/room-url");
+      
+        let input = document.getElementById("new-view/room-url");
   let share = document.getElementById("new-view/room-share");
   let list = document.getElementById("new-view/player-list");
   let counter = document.getElementById("new-view/player-count");
@@ -107,16 +95,24 @@ controller.mount({
     counter.innerHTML = details.playerList.length;
 
     for (let player of details.playerList) {
-      let li = document.createElement("li");
+          let li = document.createElement("li");
 
-      li.innerHTML = player.name + " - " + player.ready;
+          li.innerHTML = player.name + " - " + player.ready;
 
-      list.appendChild(li);
-    }
-    
-    game.uid = details.uid;
-  });
-})();
+          list.appendChild(li);
+        }
+
+        game.uid = details.uid;
+      });
+    },
+  },
+
+  "lobby-view": {
+    mounted(view) {},
+
+    unmounted(view) {},
+  },
+});
 
 (function () {
   const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -128,16 +124,6 @@ controller.mount({
     socket.emit("server/join-room", roomUID);
   }
 })();
-
-socket.on("server/new-room", function (roomUID) {
-  new Snackbar({
-    id: "snackbar-container",
-    message: "Room Created",
-    type: "success",
-  });
-
-  socket.emit("server/join-room", roomUID);
-});
 
 socket.on("server/join-room", function (res) {
   switch (res.type) {
