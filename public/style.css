@@ -35,11 +35,17 @@ body {
   overflow: auto;
 }
 
-.view-controller .page-view[data-current-view] {
+.view-controller .page-view-mount {
   display: flex;
   animation: slide-in-left 0.5s;
   perspective: 250px;
 }
+
+.view-controller .page-view-unmount {
+  animation: slide-out-left 0.5s;
+  perspective: 250px;
+}
+
 
 .t-gutters {
   padding: var(--gutter-y) var(--gutter-x);
@@ -208,6 +214,16 @@ body {
   }
   to {
     transform: translate(0, 0);
+  }
+}
+
+
+@keyframes slide-out-right {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100%, 0);
   }
 }
 
