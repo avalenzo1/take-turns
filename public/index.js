@@ -11,10 +11,10 @@ controller.mount({
       socket.emit("server/new-room");
       new Snackbar({ id: "snackbar-container", message: "Creating Room", type: "success" });
       
-      socket.on("server/new-room", function(room) {
+      socket.on("server/new-room", function(roomUID) {
         new Snackbar({ id: "snackbar-container", message: "Room Created", type: "success" });
         
-        socket.emit("server/join-room", room.uid);
+        socket.emit("server/join-room", roomUID);
       });
     },
     
@@ -32,6 +32,7 @@ controller.mount({
 
 socket.on("server/join-room", function(room) {
   new Snackbar({ id: "snackbar-container", message: "Joined Room", type: "success" });
+  controller.mountView("lobby-view");
 });
 
 // client-side

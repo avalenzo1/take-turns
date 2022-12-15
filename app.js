@@ -26,6 +26,8 @@ io.on("connection", (socket) => {
   });
   
   socket.on("server/join-room", function(roomUID) {
+    console.log(roomUID);
+    
     const player = new Player({ id: socket.id });
     
     switch (lobby.join(player, roomUID)) {
@@ -36,8 +38,6 @@ io.on("connection", (socket) => {
         socket.emit("server/join-room", { type: 'error' });
         break;
     }
-    
-    
   });
 });
 
