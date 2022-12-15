@@ -35,8 +35,12 @@ controller.mount({
   }
 });
 
+let input = document.getElementById("new-view/room-input");
+
 socket.on("server/room-details", function (details) {
+  console.log(details);
   
+  input.value = 'https://take-turns.glitch.me/?join-room=' + details.uid;
 });
 
 socket.on("server/join-room", function(res) {

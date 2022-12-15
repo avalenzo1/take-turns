@@ -31,7 +31,13 @@ io.on("connection", (socket) => {
   
   io.of("/").adapter.on("join-room", (room, id) => {
     console.log(`socket ${id} has joined room ${room}`);
-    socket.to(room).emit("server/room-details", lobby.find(room.details));
+    
+    let g_room = lobby.find(room);
+    
+    if (g_room instanceof Room) {
+      console.log(g_room);
+      socket.to(room).emit("server/room-details", g_room.details);
+    }
   });
   
   socket.on("server/join-room", function(roomUID) {
