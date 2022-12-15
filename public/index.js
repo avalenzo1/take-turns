@@ -5,96 +5,84 @@ const socket = io();
 const game = new Game();
 const controller = new ViewController({
   id: "view-controller",
-  default: "home-view",
+  default: "homeView",
 });
 
-
 controller.mount({
-  "home-view": {
-    mounted(view) {
-      
-    },
-    
-    unmounted(view) {
-
-    }
+  homeView: {
+    mounted(view) {},
   },
-  
-  "new-view": {
+
+  newView: {
     mounted(view) {
       socket.emit("server/new-room");
-      
+
       new Snackbar({
         id: "snackbar-container",
         message: "Creating Room",
         type: "success",
       });
     },
+  },
 
-    unmounted(view) {
-      
+  joinView: {
+    mounted(view) {
+      let input = document.getElementById("join-view/room-input");
+      let submit = document.getElementById("join-view/room-submit");
+
+      submit.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        socket.emit("server/join-room", input.value);
+      });
     },
   },
 
-  "join-view": {
-    elements: {
-      submit: document.getElementById("join-view/room-submit"),
-    },
+  lobbyView: {
     events: {
-      submit(e) {
-        
-        e.preventDefault();
-        socket.emit(
-          "server/join-room",
-          document.getElementById("join-view/room-input").value
-        );
-      },
-    },
-    mounted(view) {
-      this.elements.submit.addEventListener("click", this.events.submit);
-      
+      details(details) {
         let input = document.getElementById("new-view/room-url");
-  let share = document.getElementById("new-view/room-share");
-  let list = document.getElementById("new-view/player-list");
-  let counter = document.getElementById("new-view/player-count");
-  let ready = document.getElementById("new-view/player-ready");
-  
-  let shareData = {
-    title: 'Take Turns',
-    text: 'Play Take Turns with Me!',
-    url: 'https://take-turns.glitch.me/?join='
-  };
-  
-  share.addEventListener('click', async () => {
-    await navigator.share(shareData);
-  });
-  
-  input.addEventListener('click', () => {
-    input.select();
-    input.setSelectionRange(0, 99999); // For mobile devices
+        let share = document.getElementById("new-view/room-share");
+        let list = document.getElementById("new-view/player-list");
+        let counter = document.getElementById("new-view/player-count");
+        let ready = document.getElementById("new-view/player-ready");
 
-     // Copy the text inside the text field
-    navigator.clipboard.writeText(input.value);
-    
-    new Snackbar({
-      id: "snackbar-container",
-      message: "Copied Link",
-      type: "success",
-    });
-  });
-  
-  ready.addEventListener('click', () => {
-    socket.emit("server/player-ready", game.uid);
-    ready.setAttribute("disabled", "");
-  });
+        let shareData = {
+          title: "Take Turns",
+          text: "Play Take Turns with Me!",
+          url: "https://take-turns.glitch.me/?join=",
+        };
 
-  socket.on("server/room-details", function (details) {
-    shareData.url = input.value = "https://take-turns.glitch.me/?join=" + details.uid;
-    list.innerHTML = "";
+        share.addEventListener("click", async () => {
+          await navigator.share(shareData);
+        });
 
-    counter.innerHTML = details.playerList.length;
+        input.addEventListener("click", () => {
+          input.select();
+          input.setSelectionRange(0, 99999); // For mobile devices
 
-    for (let player of details.playerList) {
+          // Copy the text inside the text field
+          navigator.clipboard.writeText(input.value);
+
+          new Snackbar({
+            id: "snackbar-container",
+            message: "Copied Link",
+            type: "success",
+          });
+        });
+
+        ready.addEventListener("click", () => {
+          socket.emit("server/player-ready", game.uid);
+          ready.setAttribute("disabled", "");
+        });
+
+        shareData.url = input.value =
+          "https://take-turns.glitch.me/?join=" + details.uid;
+        list.innerHTML = "";
+
+        counter.innerHTML = details.playerList.length;
+
+        for (let player of details.playerList) {
           let li = document.createElement("li");
 
           li.innerHTML = player.name + " - " + player.ready;
@@ -103,14 +91,15 @@ controller.mount({
         }
 
         game.uid = details.uid;
-      });
+      },
     },
-  },
+    mounted(view) {
+      socket.on("server/room-details", this.events.details);
+    },
 
-  "lobby-view": {
-    mounted(view) {},
-
-    unmounted(view) {},
+    unmounted(view) {
+      socket.off("server/room-details", this.events.details);
+    },
   },
 });
 
@@ -142,6 +131,8 @@ socket.on("server/join-room", function (res) {
         type: "danger",
       });
   }
+  
+  
 });
 
 // client-side
