@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
   socket.on("server/new-room", function() {
     const room = new Room({ owner: socket.id });
     
-    socket.emit("server/new-room", room.details);
+    socket.emit("server/new-room", room);
     
     lobby.mountRoom(room);
   });
