@@ -21,14 +21,6 @@ const rooms = io.of("/").adapter.rooms;
 const sids = io.of("/").adapter.sids;
 
 io.on("connection", (socket) => {
-  socket.on("server/new-room", function() {
-    const room = new Room({ owner: socket.id });
-    
-    socket.emit("server/new-room", room.uid);
-    
-    lobby.mountRoom(room);
-  });
-  
   io.of("/").adapter.on("join-room", (room, id) => {
     console.log(`socket ${id} has joined room ${room}`);
     
@@ -53,9 +45,23 @@ io.on("connection", (socket) => {
     }
   });
   
-  socket.on("server/join-room", function(roomUID) {
-    console.log(roomUID);
+  socket.on("server/player-ready", function() {
+    const room = new Room({ owner: socket.id });
     
+    socket.emit("server/new-room", room.uid);
+    
+    lobby.mountRoom(room);
+  });
+  
+  socket.on("server/new-room", function() {
+    const room = new Room({ owner: socket.id });
+    
+    socket.emit("server/new-room", room.uid);
+    
+    lobby.mountRoom(room);
+  });
+  
+  socket.on("server/join-room", function(roomUID) {
     const player = new Player({ id: socket.id });
     const response = lobby.join(player, roomUID);
     

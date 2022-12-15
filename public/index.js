@@ -82,7 +82,7 @@ controller.mount({
   });
   
   ready.addEventListener('click', () => {
-    
+    socket.emit("server/player-ready");
   });
 
   socket.on("server/room-details", function (details) {
@@ -98,6 +98,8 @@ controller.mount({
 
       list.appendChild(li);
     }
+    
+    game.
   });
 })();
 
@@ -123,8 +125,6 @@ socket.on("server/new-room", function (roomUID) {
 });
 
 socket.on("server/join-room", function (res) {
-  console.log(res);
-
   switch (res.type) {
     case "success":
       new Snackbar({
