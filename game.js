@@ -14,23 +14,23 @@ class Lobby {
     this.roomList = [];
   }
   
-  find(UID) {
-    let room = this.roomList.filter(r => {
-      return r.uid === UID;
-    });
-    
-    if (room.length > 0) {
-      return room[0];
-    }
-    
-    return;
+  find(uid) {
+    return this.roomList.map(room => room.uid).indexOf(uid);
   }
   
-  join(player, UID) {
-    let room = this.find(UID);
+  leave(player, uid) {
+    let i = this.find(uid);
     
-    if (room instanceof Room) {
-      room.join(player);
+    if (this.roomList[i] instanceof Room) {
+      this.roomList[i].leave(player);
+    }
+  }
+  
+  join(player, uid) {
+    let i = this.find(uid);
+    
+    if (this.roomList[i] instanceof Room) {
+      this.roomList[i].join(player);
       
       return { type: 'success' };
     }
@@ -52,16 +52,8 @@ class Room {
     this.timeout = 2500;
   }
   
-  find(playerID) {
-    let player = this.roomList.filter(p => {
-      return p.uid === playerID;
-    });
-    
-    if (player.length > 0) {
-      return player[0];
-    }
-    
-    return;
+  find(id) {
+    return this.playerList.map(player => player.id).indexOf(id);
   }
   
   join(player) {
@@ -71,7 +63,11 @@ class Room {
   }
   
   leave(player) {
+    let i = this.find(player.id);
     
+    console.log(i);
+    
+    delete this.playerList[i];
   }
   
   get details() {

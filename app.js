@@ -32,20 +32,18 @@ io.on("connection", (socket) => {
   io.of("/").adapter.on("join-room", (room, id) => {
     console.log(`socket ${id} has joined room ${room}`);
     
-    let g_room = lobby.find(room);
+    let i = lobby.find(id);
     
-    if (g_room instanceof Room) {
-      console.log(g_room);
-      socket.to(room).emit("server/room-details", g_room.details);
+    if (lobby.roomList[i] instanceof Room) {
+      console.log(lobby.roomList[i]);
+      socket.to(room).emit("server/room-details", lobby.roomList[i].details);
     }
   });
   
   io.of("/").adapter.on("leave-room", (room, id) => {
     console.log(`socket ${id} has left room ${room}`);
     
-    let g_room = lobby.find(room);
-    
-    g_room.leave()
+    lobby.leave(room, id);
   });
   
   socket.on("server/join-room", function(roomUID) {
