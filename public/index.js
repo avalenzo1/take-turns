@@ -1,4 +1,4 @@
-import { ViewController, Snackbar } from "./components.js";
+import { ViewController, Snackbar, clearEvents } from "./components.js";
 import { Game } from "./take-turns.js";
 
 const socket = io();
