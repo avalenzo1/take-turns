@@ -35,27 +35,40 @@ controller.mount({
   }
 });
 
-let input = document.getElementById("new-view/room-url");
-let list =  document.getElementById("new-view/player-list");
-let counter = document.getElementById("new-view/player-count");
+(function() {
+  let input = document.getElementById("new-view/room-url");
+  let list =  document.getElementById("new-view/player-list");
+  let counter = document.getElementById("new-view/player-count");
 
-socket.on("server/room-details", function (details) {
-  console.log(details);
+  socket.on("server/room-details", function (details) {
+    console.log(details);
+
+    input.value = 'https://take-turns.glitch.me/?join-room=' + details.uid;
+    list.innerHTML = '';
+
+    counter.innerHTML = details.playerList.length;
+
+    for (let player of details.playerList) {
+      let li = document.createElement("li");
+
+      li.innerHTML = player.id;
+
+      list.appendChild(li);
+
+    }
+  });
+})();
+
+(function() {
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+  const roomUID = params["join-room"];
   
-  input.value = 'https://take-turns.glitch.me/?join-room=' + details.uid;
-  list.innerHTML = '';
-  
-  counter.innerHTML = details.playerList.length;
-  
-  for (let player of details.playerList) {
-    let li = document.createElement("li");
-    
-    li.innerHTML = player.id;
-    
-    list.appendChild(li);
-    
+  if (roomUID) {
+    socket.emit("server/join-room", roomUID); 
   }
-});
+})();
 
 socket.on("server/join-room", function(res) {
   switch (res.type) {
@@ -79,5 +92,6 @@ socket.on("connect_error", (err) => {
 
 socket.on("disconnect", () => {
   new Snackbar({ id: "snackbar-container", message: "Disconnected!!?? 🤬", type: "danger" });
+  socket.emit("server/leave-room", socket.id);
 });
 
