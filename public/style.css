@@ -37,7 +37,7 @@ body {
 
 .view-controller .page-view[data-current-view] {
   display: flex;
-  animation: slide-in 0.5s;
+  animation: slide-in-left 0.5s;
   perspective: 250px;
 }
 

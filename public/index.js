@@ -26,17 +26,16 @@ controller.mount({
   
   "join-view": {
     elements: {
-      input: document.getElementById("join-view/room-input"),
       submit: document.getElementById("join-view/room-submit")
     },
     events: {
-      submit: (e) => {
+      submit(e) {
+        
         e.preventDefault();
-        socket.emit("server/join-room", this.elements.input.value);
+        socket.emit("server/join-room", document.getElementById("join-view/room-input"));
       }
     },
     mounted(view) {
-      console.log(this.elements)
       this.elements.submit.addEventListener("click", this.events.submit);
     },
     unmounted(view) {
@@ -63,7 +62,7 @@ controller.mount({
   socket.on("server/room-details", function (details) {
     console.log(details);
 
-    input.value = 'https://take-turns.glitch.me/?join-room=' + details.uid;
+    input.value = 'https://take-turns.glitch.me/?join=' + details.uid;
     list.innerHTML = '';
 
     counter.innerHTML = details.playerList.length;
@@ -83,10 +82,10 @@ controller.mount({
   const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
     });
-  const roomUID = params["join-room"];
+  const roomUID = params["join"];
   
   if (roomUID) {
-    socket.emit("server/join-room", roomUID); 
+    socket.emit("server/join", roomUID); 
   }
 })();
 
