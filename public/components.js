@@ -72,7 +72,7 @@ class ViewController {
   mountView(view) {
     if (this.currentView) {
       let oldView = this.currentView.getAttribute("data-view");
-      // clearEvents(`[data-view='${oldView}']`);
+      clearEvents(this.currentView);
       
       if (this.callbackList[oldView] && this.callbackList[oldView].unmounted) this.callbackList[oldView].unmounted(this.currentView);
     }
@@ -99,9 +99,8 @@ function getDescendantNodes(node, all = []) {
   return all;
 }
 
-function clearEvents(querySelector) {
-  this.parent = document.querySelector(querySelector);
-  this.nodes = getDescendantNodes(this.parent);
+function clearEvents(parent) {
+  this.nodes = getDescendantNodes(parent);
   
   for (let node of this.nodes) {
     let clone = node.cloneNode(true);
