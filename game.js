@@ -11,7 +11,8 @@ class Player {
 }
 
 class Lobby {
-  constructor() {
+  constructor(io) {
+    this.io = io;
     this.roomList = [];
   }
   

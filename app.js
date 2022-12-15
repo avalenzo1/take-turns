@@ -14,24 +14,33 @@ app.get("/", (req, res) => {
   res.render("/public/index.html");
 });
 
-const lobby = new Lobby();
-
-// main namespace
-const rooms = io.of("/").adapter.rooms;
-const sids = io.of("/").adapter.sids;
+const lobby = new Lobby(io);
 
 io.on("connection", (socket) => {
+  function fetchDetails(uid) {
+    let room = lobby.fetchRoom(uid);
+    
+    if (room instanceof Room) {
+      socket.to(room).emit("server/room-details", room.details);
+    }
+  }
+  
+  function createRoom() {
+    
+  }
+  
+  function joinRoom() {
+    
+  }
+  
+  function leaveRoom() {
+    
+  }
+  
   io.of("/").adapter.on("join-room", (room, id) => {
     console.log(`socket ${id} has joined room ${room}`);
     
-    let groom = lobby.fetchRoom(room);
-    
-    console.log(groom);
-    
-    if (groom instanceof Room) {
-      
-      socket.to(room).emit("server/room-details", groom.details);
-    }
+    fetchDetails(room);
   });
   
   io.of("/").adapter.on("leave-room", (room, id) => {
@@ -41,7 +50,7 @@ io.on("connection", (socket) => {
     
     if (groom instanceof Room) {
       groom.leave(id);
-      socket.to(room).emit("server/room-details", groom.details);
+      fetchDetails(room);
     }
   });
   
@@ -67,13 +76,11 @@ io.on("connection", (socket) => {
     }
   });
   
-  socket.on("server/join-room", function(roomUID) {
-    console.log(roomUID);
-    
+  socket.on("server/join-room", function(uid) {
     const player = new Player({ id: socket.id });
-    const response = lobby.join(player, roomUID);
+    const response = lobby.join(player, uid);
     
-    socket.join(roomUID);
+    socket.join(uid);
     socket.emit("server/join-room", response);
   });
   
