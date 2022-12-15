@@ -21,15 +21,14 @@ io.on("connection", (socket) => {
     let room = lobby.fetchRoom(uid);
     
     if (room instanceof Room) {
-      socket.to(room).emit("server/room-details", room.details);
+      console.log(`${socket.id} fetched ${uid} details`);
+      socket.to(uid).emit("server/room-details", room.details);
     }
   }
   
   function createRoom() {
     const room = new Room({ owner: socket.id });
-    
     socket.emit("server/new-room", room.uid);
-    
     lobby.mountRoom(room);
   }
   
@@ -49,8 +48,6 @@ io.on("connection", (socket) => {
       fetchDetails(uid);
     }
   }
-  
-  
   
   io.of("/").adapter.on("join-room", (room, id) => {
     console.log(`socket ${id} has joined room ${room}`);

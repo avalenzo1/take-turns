@@ -85,6 +85,8 @@ controller.mount({
       socket.emit("server/room-details", game.uid);
 
       socket.on("server/room-details", function (details) {
+        console.log("HELLO??")
+        
         shareData.url = input.value =
           "https://take-turns.glitch.me/?join=" + details.uid;
         list.innerHTML = "";
