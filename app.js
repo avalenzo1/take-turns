@@ -40,11 +40,11 @@ io.on("connection", (socket) => {
     socket.emit("server/join-room", response);
   }
   
-  function leaveRoom(player_id, uid) {
+  function leaveRoom(playerID, uid) {
     let room = lobby.fetchRoom(uid);
     
     if (room instanceof Room) {
-      room.leave(player_id);
+      room.leave(playerID);
       fetchDetails(uid);
     }
   }
@@ -70,16 +70,15 @@ io.on("connection", (socket) => {
   });
   
   socket.on("server/player-ready", function(uid) {
-    let groom = lobby.fetchRoom(uid);
+    let room = lobby.fetchRoom(uid);
     
-    if (groom instanceof Room) {
-      let player = groom.fetchPlayer(socket.id);
+    if (room instanceof Room) {
+      let player = room.fetchPlayer(socket.id);
       
       if (player instanceof Player) {
         player.ready = true;
+        fetchDetails(uid);
       }
-      
-      fetchDetails(uid);
     }
   });
   

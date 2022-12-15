@@ -56,7 +56,7 @@ class Room {
   
   fetchPlayer(id) {
     let player = this.playerList.filter(p => {
-      return p.uid === UID;
+      return p.id === id;
     });
     
     if (player.length > 0) {
