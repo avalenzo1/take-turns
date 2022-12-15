@@ -94,7 +94,7 @@ class ViewController {
 function clearEvents(querySelector) {
   this.parent = document.querySelector(querySelector);
   
-  for (let child of this.parent.)
+  
 }
 
 export { ViewController, Snackbar, clearEvents };
