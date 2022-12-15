@@ -2,9 +2,21 @@ function UID() {
   return Math.random().toString(36).slice(-6).toUpperCase();
 }
 
+class Player {
+  constructor({ uid }) {
+    this.uid = uid;
+  }
+  
+  
+}
+
 class Lobby {
   constructor() {
     this.roomList = [];
+  }
+  
+  join(player, UID) {
+    
   }
   
   mountRoom(room) {
@@ -14,7 +26,7 @@ class Lobby {
 
 class Room {
   constructor({ owner }) {
-    this.UID = UID();
+    this.uid = UID();
     this.owner = owner;
     this.playerList = [];
     this.insession = false;
@@ -26,4 +38,4 @@ class Room {
   }
 }
 
-module.exports = { Lobby, Room };
+module.exports = { Lobby, Room, Player };

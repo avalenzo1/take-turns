@@ -14,10 +14,8 @@ controller.mount({
       socket.on("server/new-room", function(room) {
         new Snackbar({ id: "snackbar-container", message: "Room Created", type: "success" });
         
-        game.room = room;
+        socket.emit("server/join-room", room.uid);
       });
-      
-      controller.mountView("lobby-view");
     },
     
     unmounted(view) {
@@ -30,6 +28,10 @@ controller.mount({
       
     }
   }
+});
+
+socket.on("server/join-room", function(room) {
+  new Snackbar({ id: "snackbar-container", message: "Joined Room", type: "success" });
 });
 
 // client-side
