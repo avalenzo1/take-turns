@@ -38,7 +38,12 @@ class Snackbar {
 class ViewController {
   constructor({ id, default: defaultView }) {
     this.id = id;
+    
+    this.previousView;
+    this.currentView;
     this.defaultView = defaultView;
+    
+    this.historyList = [];
     this.callbackList = [];
 
     this.initController();
@@ -84,7 +89,9 @@ class ViewController {
   }
 
   mountView(view) {
-    // unmount
+    this.previousView = this.currentView;
+    
+    // View Unmounted
     this.beforeMount();
 
     this.viewList = this.viewController.querySelectorAll("[data-view]");
