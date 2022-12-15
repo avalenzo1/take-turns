@@ -52,10 +52,26 @@ class Room {
     this.timeout = 2500;
   }
   
+  find(playerID) {
+    let player = this.roomList.filter(p => {
+      return p.uid === playerID;
+    });
+    
+    if (player.length > 0) {
+      return player[0];
+    }
+    
+    return;
+  }
+  
   join(player) {
     if (player instanceof Player) {
       this.playerList.push(player);
     }
+  }
+  
+  leave(player) {
+    
   }
   
   get details() {

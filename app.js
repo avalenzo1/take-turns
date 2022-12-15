@@ -40,6 +40,14 @@ io.on("connection", (socket) => {
     }
   });
   
+  io.of("/").adapter.on("leave-room", (room, id) => {
+    console.log(`socket ${id} has left room ${room}`);
+    
+    let g_room = lobby.find(room);
+    
+    g_room.leave()
+  });
+  
   socket.on("server/join-room", function(roomUID) {
     console.log(roomUID);
     
@@ -48,6 +56,10 @@ io.on("connection", (socket) => {
     
     socket.join(roomUID);
     socket.emit("server/join-room", response);
+  });
+  
+  socket.on("disconnect", () => {
+    
   });
 });
 

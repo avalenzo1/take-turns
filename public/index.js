@@ -82,14 +82,16 @@ controller.mount({
   const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
     });
-  const roomUID = params["join"];
+  const roomUID = params.join;
   
   if (roomUID) {
-    socket.emit("server/join", roomUID); 
+    socket.emit("server/join-room", roomUID);
   }
 })();
 
 socket.on("server/join-room", function(res) {
+  console.log(res);
+  
   switch (res.type) {
     case 'success':
       new Snackbar({ id: "snackbar-container", message: "Joined Room", type: "success" });
