@@ -1,4 +1,5 @@
 import { ViewController, Snackbar } from './components.js';
+import { Game } from ''
 
 const socket = io();
 
@@ -23,15 +24,23 @@ viewController.mount({
       socket.emit("server/new-room");
       new Snackbar({ id: "snackbar-container", message: "Creating Room", type: "success" });
       
-      socket.on("server/new-room", function() {
+      socket.on("server/new-room", function(lobby) {
         new Snackbar({ id: "snackbar-container", message: "Room Created", type: "success" });
+        
+        game.lobby = lobby;
       });
       
-      viewController.mountView("join-view");
+      viewController.mountView("lobby-view");
     },
     
     unmounted(view) {
       
+    }
+  },
+      
+  "lobby-view": {
+    mounted(view) {
+      console.log(game.lobby)
     }
   }
 });

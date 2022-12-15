@@ -19,9 +19,10 @@ const lobby = new Lobby();
 io.on("connection", (socket) => {
   socket.on("server/new-room", function() {
     const room = new Room({ owner: socket.id });
-    lobby.mountRoom(room);
     
-    socket.emit("server/new-room", room);
+    socket.emit("server/new-room", room.details);
+    
+    lobby.mountRoom(room);
   });
 });
 
