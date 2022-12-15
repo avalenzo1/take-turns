@@ -35,12 +35,26 @@ controller.mount({
   }
 });
 
-let input = document.getElementById("new-view/room-input");
+let input = document.getElementById("new-view/room-url");
+let list =  document.getElementById("new-view/player-list");
+let counter = document.getElementById("new-view/player-count");
 
 socket.on("server/room-details", function (details) {
   console.log(details);
   
   input.value = 'https://take-turns.glitch.me/?join-room=' + details.uid;
+  list.innerHTML = '';
+  
+  counter.innerHTML = details.playerList.length;
+  
+  for (let player of details.playerList) {
+    let li = document.createElement("li");
+    
+    li.innerHTML = player.id;
+    
+    list.appendChild(li);
+    
+  }
 });
 
 socket.on("server/join-room", function(res) {
@@ -66,3 +80,4 @@ socket.on("connect_error", (err) => {
 socket.on("disconnect", () => {
   new Snackbar({ id: "snackbar-container", message: "Disconnected!!?? 🤬", type: "danger" });
 });
+
