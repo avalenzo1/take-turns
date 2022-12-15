@@ -63,13 +63,15 @@ class ViewController {
     for (let link of this.viewLinks) {
       let view = link.getAttribute("data-link");
       
-      link.onclick = () => {
+      link.addEventListener("click", () => {
         this.mountView(view);
       };
     }
   }
   
   mountView(view) {
+    console.log("HELEPP??")
+    
     if (this.currentView) {
       let oldView = this.currentView.getAttribute("data-view");
       

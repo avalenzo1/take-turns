@@ -74,6 +74,20 @@ controller.mount({
   share.addEventListener('click', async () => {
     await navigator.share(shareData);
   });
+  
+  input.addEventListener('click', () => {
+    input.select();
+    input.setSelectionRange(0, 99999); // For mobile devices
+
+     // Copy the text inside the text field
+    navigator.clipboard.writeText(input.value);
+    
+    new Snackbar({
+      id: "snackbar-container",
+      message: "Copied Link",
+      type: "success",
+    });
+  });
 
   socket.on("server/room-details", function (details) {
     shareData.url = input.value = "https://take-turns.glitch.me/?join=" + details.uid;
