@@ -5,7 +5,7 @@ const port = 3000;
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const { Game } = require("./game.js")
+const { Lobby, Room } = require("./game.js")
 const io = new Server(server);
 
 app.use(express.static(__dirname + "/public"));
@@ -14,17 +14,14 @@ app.get("/", (req, res) => {
   res.render("/public/index.html");
 });
 
-const game = () => {
-  return { roomList: [] };
-};
+const lobby = new Lobby();
 
 io.on("connection", (socket) => {
   socket.on("server/new-room", function() {
-    game.newRoom();
+    const room = new Room({ owner: socket.id });
+    lobby.mountRoom(room);
     
-    socket.emit("server/new-room", {
-      roomID: "null"
-    });
+    socket.emit("server/new-room", room);
   });
 });
 

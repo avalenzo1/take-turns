@@ -36,10 +36,10 @@ class Snackbar {
 }
 
 class ViewController {
-  constructor({ id, default: defaultView, mounts }) {
+  constructor({ id, default: defaultView }) {
     this.id = id;
     this.defaultView = defaultView;
-    this.callbackList = mounts;
+    this.callbackList = [];
     
     this.initController();
   }
@@ -51,6 +51,10 @@ class ViewController {
       this.mountView(this.defaultView);
       this.mountEvents();
     }
+  }
+  
+  mount(callbackList) {
+    this.callbackList = callbackList;
   }
   
   mountEvents() {

@@ -15,20 +15,23 @@ socket.on("disconnect", () => {
   new Snackbar({ id: "snackbar-container", message: "Disconnected!!?? 🤬", type: "danger" });
 });
 
-const mounts = {
+const viewController = new ViewController({ id: "view-controller", default: "home-view" });
+
+viewController.mount({
   "new-view": {
     mounted(view) {
       socket.emit("server/new-room");
+      new Snackbar({ id: "snackbar-container", message: "Creating Room", type: "success" });
       
       socket.on("server/new-room", function() {
-        console.log("hello!!");
+        new Snackbar({ id: "snackbar-container", message: "Room Created", type: "success" });
       });
+      
+      viewController.mountView("join-view");
     },
     
     unmounted(view) {
       
     }
   }
-};
-
-const viewController = new ViewController({ id: "view-controller", default: "home-view", mounts: mounts });
+});
