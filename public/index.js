@@ -17,16 +17,6 @@ controller.mount({
         message: "Creating Room",
         type: "success",
       });
-
-      socket.on("server/new-room", function (roomUID) {
-        new Snackbar({
-          id: "snackbar-container",
-          message: "Room Created",
-          type: "success",
-        });
-
-        socket.emit("server/join-room", roomUID);
-      });
     },
 
     unmounted(view) {},
@@ -65,6 +55,8 @@ controller.mount({
   let share = document.getElementById("new-view/room-share");
   let list = document.getElementById("new-view/player-list");
   let counter = document.getElementById("new-view/player-count");
+  let ready = document.getElementById("new-view/player-ready");
+  
   let shareData = {
     title: 'Take Turns',
     text: 'Play Take Turns with Me!',
@@ -87,6 +79,10 @@ controller.mount({
       message: "Copied Link",
       type: "success",
     });
+  });
+  
+  ready.addEventListener('click', () => {
+    
   });
 
   socket.on("server/room-details", function (details) {
@@ -115,6 +111,16 @@ controller.mount({
     socket.emit("server/join-room", roomUID);
   }
 })();
+
+socket.on("server/new-room", function (roomUID) {
+  new Snackbar({
+    id: "snackbar-container",
+    message: "Room Created",
+    type: "success",
+  });
+
+  socket.emit("server/join-room", roomUID);
+});
 
 socket.on("server/join-room", function (res) {
   console.log(res);

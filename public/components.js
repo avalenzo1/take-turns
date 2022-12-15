@@ -65,13 +65,11 @@ class ViewController {
       
       link.addEventListener("click", () => {
         this.mountView(view);
-      };
+      });
     }
   }
   
   mountView(view) {
-    console.log("HELEPP??")
-    
     if (this.currentView) {
       let oldView = this.currentView.getAttribute("data-view");
       
