@@ -72,6 +72,7 @@ class ViewController {
   mountView(view) {
     if (this.currentView) {
       let oldView = this.currentView.getAttribute("data-view");
+      // clearEvents(`[data-view='${oldView}']`);
       
       if (this.callbackList[oldView] && this.callbackList[oldView].unmounted) this.callbackList[oldView].unmounted(this.currentView);
     }
@@ -91,10 +92,21 @@ class ViewController {
   }
 }
 
+function getDescendantNodes(node, all = []) {
+  all.push(...node.childNodes);
+  for (const child of node.childNodes) 
+    getDescendantNodes(child, all);
+  return all;
+}
+
 function clearEvents(querySelector) {
   this.parent = document.querySelector(querySelector);
+  this.nodes = getDescendantNodes(this.parent);
   
-  
+  for (let node of this.nodes) {
+    let clone = node.cloneNode(true);
+    node.parentNode.replaceChild(clone, node);
+  }
 }
 
 export { ViewController, Snackbar, clearEvents };
