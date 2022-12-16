@@ -47,7 +47,7 @@ class Lobby {
 
 class Room {
   constructor({ owner }) {
-    this.uid = UID();
+    this.id = UID();
     this.owner = owner;
     this.playerList = [];
     this.insession = false;
@@ -86,7 +86,7 @@ class Room {
     return {
       owner: this.owner,
       playerList: this.playerList,
-      uid: this.uid
+      id: this.id
     };
   }
 }

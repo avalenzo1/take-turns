@@ -137,6 +137,7 @@ socket.on("server/join-room", function (res) {
         message: "Joined Room",
         type: "success",
       });
+      
       controller.mountView("lobby-view");
       break;
     case "error":
@@ -145,6 +146,7 @@ socket.on("server/join-room", function (res) {
         message: res.message,
         type: "danger",
       });
+      controller.mountView("home-view");
   }
 });
 
