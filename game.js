@@ -95,8 +95,11 @@ function createServer(io) {
   
   io.on("connection", (socket) => {
     function fetchDetails(id) {
-      console.log(socket.rooms);
       let room = server.fetchRoom(id);
+      
+      for (const [room, socket] of Object.entries(socket.rooms)) {
+        console.log(`${room}: ${socket}`);
+      }
 
       if (room instanceof Room) {
         console.log(`${socket.id} fetched ${id} details`);
