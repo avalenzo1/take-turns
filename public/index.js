@@ -71,7 +71,8 @@ controller.mount({
   let list = document.getElementById("new-view/player-list");
   let counter = document.getElementById("new-view/player-count");
   let ready = document.getElementById("new-view/player-ready");
-
+  let state = false;
+  
   let metadata = {
     title: "Take Turns",
     text: "Play Take Turns with Me!",
@@ -97,18 +98,18 @@ controller.mount({
   });
 
   ready.addEventListener("click", () => {
+
     socket.emit("server/player-state", {
       id: room.id,
       state: {
         ready: true
       }
     });
+    
   });
 
-  socket.on("server/room-details", function (room) {
-    console.log(details);
-    
-    let details = room.details;
+  socket.on("server/room-details", function (details) {
+    console.log("details");
     
     metadata.url = input.value =
       "https://take-turns.glitch.me/?join=" + details.id;

@@ -105,10 +105,8 @@ function createServer(io) {
 
       if (room instanceof Room) {
         console.log(`${socket.id} fetched ${id} details`);
-
-        console.log(room.details)
         
-        socket.to(id).emit("server/room-details", room);
+        socket.to(id).emit("server/room-details", room.details);
       }
     }
     
