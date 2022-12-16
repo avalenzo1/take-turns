@@ -5,11 +5,11 @@
   --tt-secondary-rgb: 50, 50, 50;
   --tt-secondary: rgba(var(--tt-secondary-rgb), 1);
   
-  --tt-info-rgb: var(--tt-secondary-rgb);
-  --tt-info: var(--tt-secondary);
-  --tt-warning-rgb: ;
+  --tt-success-rgb: 75, 200, 115;
+  --tt-success: rgba(var(--tt-success-rgb), 1);
+  --tt-warning-rgb: 255, 128, 0;
   --tt-warning: rgba(var(--tt-warning-rgb), 1);
-  --tt-danger-rgb: ;
+  --tt-danger-rgb: 255, 55, 0;
   --tt-danger: rgba(var(--tt-danger-rgb), 1);
 
   --gutter-x: 25%;
@@ -73,13 +73,32 @@ body {
 }
 
 .t-snackbar {
+  --bg-tint: var(--tt-secondary);
+  --bg-tint-rgb: var(--tt-secondary-rgb);
+  
   position: relative;
-  background-color: var(--tt-secondary);
+  background-color: var(--bg-tint);
   color: #ffffff;
   width: 100%;
   padding: 1rem;
   border-radius: 0.5rem;
   backdrop-filter: blur(2px);
+  box-shadow: 0 2px 5px rgba(var(--bg-tint-rgb),0.25);
+}
+
+.t-snackbar--success {
+  --bg-tint: var(--tt-success);
+  --bg-tint-rgb: var(--tt-success-rgb);
+}
+
+.t-snackbar--warning {
+  --bg-tint: var(--tt-warning);
+  --bg-tint-rgb: var(--tt-warning-rgb);
+}
+
+.t-snackbar--danger {
+  --bg-tint: var(--tt-danger);
+  --bg-tint-rgb: var(--tt-danger-rgb);
 }
 
 .t-snackbar--fade-in {

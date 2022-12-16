@@ -22,7 +22,6 @@ controller.mount({
       new Snackbar({
         id: "snackbar-container",
         message: "Creating Room",
-        type: "success",
       });
     },
   },
@@ -71,7 +70,6 @@ controller.mount({
         new Snackbar({
           id: "snackbar-container",
           message: "Left Room",
-          type: "success",
         });
       });
 
@@ -89,13 +87,12 @@ controller.mount({
           new Snackbar({
             id: "snackbar-container",
             message: "Copied Link",
-            type: "success",
           });
         } catch (e) {
           new Snackbar({
             id: "snackbar-container",
-            message: "Copied Link",
-            type: "danger",
+            message: "Couldn't Copy Link",
+            type: "warning",
           });
         }
       });
@@ -156,7 +153,6 @@ socket.on("server/new-room", function (id) {
   new Snackbar({
     id: "snackbar-container",
     message: "Room Created",
-    type: "success",
   });
 
   socket.emit("server/join-room", id);
@@ -168,7 +164,6 @@ socket.on("server/join-room", function (res) {
       new Snackbar({
         id: "snackbar-container",
         message: "Joined Room",
-        type: "success",
       });
       room = res.room;
 

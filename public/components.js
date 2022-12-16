@@ -2,7 +2,7 @@ class Snackbar {
   constructor({ id, message, type, timeout }) {
     this.id = id;
     this.message = document.createTextNode(message);
-    this.type = type || "info";
+    this.type = type;
     this.timeout = timeout || 2000;
 
     this.mountAlert();
@@ -11,6 +11,7 @@ class Snackbar {
   get element() {
     this.alert = document.createElement("div");
     this.alert.classList.add("t-snackbar");
+    this.alert.classList.add("t-snackbar--" + this.type);
     this.alert.classList.add("t-snackbar--fade-in");
     this.alert.append(this.message);
 
