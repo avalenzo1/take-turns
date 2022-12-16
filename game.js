@@ -107,6 +107,7 @@ function createServer(io) {
         console.log(`${socket.id} fetched ${id} details`);
         
         socket.to(id).emit("server/room-details", room.details);
+        socket.emit("server/room-details", room.details);
       }
     }
     
