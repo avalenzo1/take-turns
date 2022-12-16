@@ -9,7 +9,7 @@
   --tt-success: rgba(var(--tt-success-rgb), 1);
   --tt-warning-rgb: 255, 128, 0;
   --tt-warning: rgba(var(--tt-warning-rgb), 1);
-  --tt-danger-rgb: 255, 55, 0;
+  --tt-danger-rgb: 255, 5, 0;
   --tt-danger: rgba(var(--tt-danger-rgb), 1);
 
   --gutter-x: 25%;
