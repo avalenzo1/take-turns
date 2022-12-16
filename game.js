@@ -94,6 +94,8 @@ function createServer(io) {
   let server = new Server();
   
   io.on("connection", (socket) => {
+    let socket = new Socket(socket);
+    
     function fetchDetails(id) {
       let room = server.fetchRoom(id);
 
