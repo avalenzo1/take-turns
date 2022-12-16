@@ -109,8 +109,6 @@ controller.mount({
   });
 
   socket.on("server/room-details", function (details) {
-    console.log("details");
-    
     metadata.url = input.value =
       "https://take-turns.glitch.me/?join=" + details.id;
     list.innerHTML = "";
@@ -157,7 +155,6 @@ socket.on("server/join-room", function (res) {
         message: res.message,
         type: "danger",
       });
-      controller.mountView("home-view");
   }
 });
 
