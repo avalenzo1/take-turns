@@ -15,9 +15,9 @@ class Server {
     this.roomList = [];
   }
   
-  fetchRoom(uid) {
+  fetchRoom(id) {
     let room = this.roomList.filter(r => {
-      return r.uid === uid;
+      return r.id === id;
     });
     
     if (room.length > 0) {
@@ -27,8 +27,8 @@ class Server {
     return;
   }
   
-  join(player, uid) {
-    let room = this.fetchRoom(uid);
+  join(player, id) {
+    let room = this.fetchRoom(id);
     
     if (room instanceof Room) {
       room.join(player);
@@ -94,35 +94,35 @@ function createServer(io) {
   let server = new Server();
   
   io.on("connection", (socket) => {
-    function fetchDetails(uid) {
-      let room = server.fetchRoom(uid);
+    function fetchDetails(id) {
+      let room = server.fetchRoom(id);
 
       if (room instanceof Room) {
-        console.log(`${socket.id} fetched ${uid} details`);
-        socket.to(uid).emit("server/room-details", room.details);
+        console.log(`${socket.id} fetched ${id} details`);
+        socket.to(id).emit("server/room-details", room.details);
       }
     }
 
     function createRoom() {
       const room = new Room({ owner: socket.id });
-      socket.emit("server/new-room", room.uid);
+      socket.emit("server/new-room", room.id);
       server.mountRoom(room);
     }
 
-    function joinRoom(uid) {
+    function joinRoom(id) {
       const player = new Player({ id: socket.id });
-      const response = server.join(player, uid);
+      const response = server.join(player, id);
 
-      socket.join(uid);
+      socket.join(id);
       socket.emit("server/join-room", response);
     }
 
-    function leaveRoom(playerID, uid) {
-      let room = server.fetchRoom(uid);
+    function leaveRoom(playerID, id) {
+      let room = server.fetchRoom(id);
 
       if (room instanceof Room) {
         room.leave(playerID);
-        fetchDetails(uid);
+        fetchDetails(id);
       }
     }
   
@@ -142,29 +142,25 @@ function createServer(io) {
     createRoom();
   });
   
-  socket.on("server/room-details", function(uid) {
-    fetchDetails(uid);
+  socket.on("server/room-details", function(id) {
+    fetchDetails(id);
   });
   
-  socket.on("server/player-ready", function(uid) {
-    let room = server.fetchRoom(uid);
+  socket.on("server/player-ready", function(id) {
+    let room = server.fetchRoom(id);
     
     if (room instanceof Room) {
       let player = room.fetchPlayer(socket.id);
       
       if (player instanceof Player) {
         player.ready = true;
-        fetchDetails(uid);
+        fetchDetails(id);
       }
     }
   });
   
-  socket.on("server/join-room", function(uid) {
-    joinRoom(uid);
-  });
-  
-  socket.on("disconnect", () => {
-    
+  socket.on("server/join-room", function(id) {
+    joinRoom(id);
   });
 });
 }
