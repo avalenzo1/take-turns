@@ -63,15 +63,15 @@ controller.mount({
         url: "https://take-turns.glitch.me/?join=",
       };
       
-      cancel.style.back
+      cancel.style.backgroundColor = "#000";
 
       cancel.addEventListener("click", () => {
         socket.emit("server/leave-room", room.id);
         
         new Snackbar({
           id: "snackbar-container",
-          message: "Copied Link",
-          type: "danger",
+          message: "Left Room",
+          type: "success",
         });
       });
 
