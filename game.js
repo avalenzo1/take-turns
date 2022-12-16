@@ -131,14 +131,15 @@ function createServer(io) {
       socket.emit("server/join-room", response);
     }
 
-    function leaveRoom(playerID, id) {
-      let room = server.fetchRoom(id);
+    function leaveRoom(roomID, playerID) {
+      let room = server.fetchRoom(roomID);
 
       if (room instanceof Room) {
-        console.log(`socket ${playerID} has left room ${id}`);
-        socket.leave(id);
+        
+        console.log(`${playerID} left!!!!!!!!`);
+        
         room.leave(playerID);
-        fetchDetails(playerID);
+        fetchDetails(roomID);
       }
     }
   
@@ -147,7 +148,9 @@ function createServer(io) {
   });
   
   io.of("/").adapter.on("leave-room", (roomID, playerID) => {
-    leaveRoom(playerID, roomID);
+    console.log(`socket ${playerID} has left room ${roomID}`);
+    
+    leaveRoom(roomID, playerID);
   });
   
   socket.on("server/new-room", function() {
@@ -159,7 +162,7 @@ function createServer(io) {
   });
     
   socket.on("server/leave-room", function(id) {
-    leaveRoom(socket.id, id);
+    leaveRoom(id, socket.id);
   });
   
   socket.on("server/room-details", function(id) {

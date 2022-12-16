@@ -61,8 +61,6 @@ controller.mount({
         text: "Play Take Turns with Me!",
         url: "https://take-turns.glitch.me/?join=",
       };
-      
-      cancel.style.backgroundColor = "#000";
 
       cancel.addEventListener("click", () => {
         socket.emit("server/leave-room", room.id);
@@ -92,7 +90,6 @@ controller.mount({
           new Snackbar({
             id: "snackbar-container",
             message: "Couldn't Copy Link",
-            type: "warning",
           });
         }
       });
