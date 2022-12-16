@@ -48,46 +48,25 @@ controller.mount({
   },
 
   "lobby-view": {
-    metadata = {
-      title: "Take Turns",
-      text: "Play Take Turns with Me!",
-      url: "https://take-turns.glitch.me/?join=",
-    },
-    events: {
-      setDetails(details) {
-        let input = document.getElementById("new-view/room-url");
-        let list = document.getElementById("new-view/player-list");
-        
-        this.metadata.url = input.value =
-          "https://take-turns.glitch.me/?join=" + details.id;
-        list.innerHTML = "";
-
-        counter.innerHTML = details.playerList.length;
-
-        for (let player of details.playerList) {
-          let li = document.createElement("li");
-
-          li.innerHTML = player.name + " - " + player.ready;
-
-          list.appendChild(li);
-        }
-
-        console.log("HELLO?/");
-      }
-    },
-    mounted(view) {
+    mounted() {
       let input = document.getElementById("new-view/room-url");
       let share = document.getElementById("new-view/room-share");
+      let list = document.getElementById("new-view/player-list");
       let counter = document.getElementById("new-view/player-count");
       let ready = document.getElementById("new-view/player-ready");
-      let cancel = view.querySelector('[data-navigate="back"]');
+      let cancel = document.querySelector('[data-navigate="back"]');
 
-      cancel.style.backgroundColor = "#000 !important";
+      let metadata = {
+        title: "Take Turns",
+        text: "Play Take Turns with Me!",
+        url: "https://take-turns.glitch.me/?join=",
+      };
+      
+      cancel.style.backgroundColor = "#000";
 
       cancel.addEventListener("click", () => {
         socket.emit("server/leave-room", id);
-        
-        alert("HI!");
+        alert("HI!!");
       });
 
       share.addEventListener("click", async () => {
@@ -115,15 +94,29 @@ controller.mount({
             ready: true,
           },
         });
+        ready.disabled = true;
       });
 
-      socket.on("server/room-details", this.events.setDetails);
+      socket.on("server/room-details", function (details) {
+        metadata.url = input.value =
+          "https://take-turns.glitch.me/?join=" + details.id;
+        list.innerHTML = "";
+
+        counter.innerHTML = details.playerList.length;
+
+        for (let player of details.playerList) {
+          let li = document.createElement("li");
+
+          li.innerHTML = player.name + " - " + player.ready;
+
+          list.appendChild(li);
+        }
+
+        console.log("HELLO?/");
+      });
 
       socket.emit("server/room-details", room.id);
     },
-    unmounted() {
-      socket.off("server/room-details", this.events.setDetails);
-    }
   },
 });
 
