@@ -55,7 +55,7 @@ controller.mount({
       let list = document.getElementById("new-view/player-list");
       let counter = document.getElementById("new-view/player-count");
       let ready = document.getElementById("new-view/player-ready");
-      let cancel = document.querySelector('[data-navigate="back"]');
+      let cancel = document.querySelector('a');
 
       let metadata = {
         title: "Take Turns",
@@ -63,11 +63,11 @@ controller.mount({
         url: "https://take-turns.glitch.me/?join=",
       };
       
-      cancel.style.backgroundColor = "#000";
+      cancel.style.backgroundColor = "#000 !important";
 
       cancel.addEventListener("click", () => {
-        socket.emit("server/leave-room", id);
         alert("HI!!");
+        socket.emit("server/leave-room", id);
       });
 
       share.addEventListener("click", async () => {
