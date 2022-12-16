@@ -132,8 +132,8 @@ function createServer(io) {
       let room = server.fetchRoom(id);
 
       if (room instanceof Room) {
-        room.leave(playerID);
-        fetchDetails(id);
+        room.leave(socket.id);
+        fetchDetails(playerID);
       }
     }
   
@@ -152,6 +152,14 @@ function createServer(io) {
   socket.on("server/new-room", function() {
     createRoom();
   });
+    
+  socket.on("server/join-room", function(id) {
+    joinRoom(id);
+  });
+    
+  socket.on("server/leave-room", function(id) {
+    leaveRoom(id, socket.id);
+  });
   
   socket.on("server/room-details", function(id) {
     fetchDetails(id);
@@ -164,10 +172,6 @@ function createServer(io) {
       setState(e.state);
       fetchDetails(room.id);
     }
-  });
-  
-  socket.on("server/join-room", function(id) {
-    joinRoom(id);
   });
 });
 }

@@ -48,27 +48,46 @@ controller.mount({
   },
 
   "lobby-view": {
-    mounted() {
+    metadata = {
+      title: "Take Turns",
+      text: "Play Take Turns with Me!",
+      url: "https://take-turns.glitch.me/?join=",
+    },
+    events: {
+      setDetails(details) {
+        let input = document.getElementById("new-view/room-url");
+        let list = document.getElementById("new-view/player-list");
+        
+        this.metadata.url = input.value =
+          "https://take-turns.glitch.me/?join=" + details.id;
+        list.innerHTML = "";
+
+        counter.innerHTML = details.playerList.length;
+
+        for (let player of details.playerList) {
+          let li = document.createElement("li");
+
+          li.innerHTML = player.name + " - " + player.ready;
+
+          list.appendChild(li);
+        }
+
+        console.log("HELLO?/");
+      }
+    },
+    mounted(view) {
       let input = document.getElementById("new-view/room-url");
       let share = document.getElementById("new-view/room-share");
-      let list = document.getElementById("new-view/player-list");
       let counter = document.getElementById("new-view/player-count");
       let ready = document.getElementById("new-view/player-ready");
-      let cancel = document.querySelector('[data-navigate="back"]');
+      let cancel = view.querySelector('[data-navigate="back"]');
 
-      let metadata = {
-        title: "Take Turns",
-        text: "Play Take Turns with Me!",
-        url: "https://take-turns.glitch.me/?join=",
-      };
+      cancel.style.backgroundColor = "#000 !important";
 
       cancel.addEventListener("click", () => {
         socket.emit("server/leave-room", id);
-        confirm(message);
-        alert("HI!!");
-
-        var message =
-          "Are you sure you want to navigate away from this page?\n\nYou have started writing or editing a post.\n\nPress OK to continue or Cancel to stay on the current page.";
+        
+        alert("HI!");
       });
 
       share.addEventListener("click", async () => {
@@ -98,26 +117,13 @@ controller.mount({
         });
       });
 
-      socket.on("server/room-details", function (details) {
-        metadata.url = input.value =
-          "https://take-turns.glitch.me/?join=" + details.id;
-        list.innerHTML = "";
-
-        counter.innerHTML = details.playerList.length;
-
-        for (let player of details.playerList) {
-          let li = document.createElement("li");
-
-          li.innerHTML = player.name + " - " + player.ready;
-
-          list.appendChild(li);
-        }
-
-        console.log("HELLO?/");
-      });
+      socket.on("server/room-details", this.events.setDetails);
 
       socket.emit("server/room-details", room.id);
     },
+    unmounted() {
+      socket.off("server/room-details", this.events.setDetails);
+    }
   },
 });
 
