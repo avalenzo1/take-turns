@@ -37,7 +37,7 @@ class Server {
     if (room instanceof Room) {
       room.join(player);
       
-      return { type: 'success' };
+      return { type: 'success', room: room };
     }
     
     return { type: 'error', message: `r̷̢̛̖͍ǫ̶̤̐͑̂ŏ̴̠̰͕̈́̇ͅṁ̶͙͖̋̃̐ ̴͉̫̩̈́̔͐d̸̟̙́̅̽ǫ̸̤̺̏̑͋͆͜e̷͕̲͕̒̅͝ș̷̰͒̏̈́ͅ ̴͕̀̏͒n̷̘̮̖̼̈̈́̚ó̵̫t̷̯̐ ̴̯̬̒ę̵̰̘͕̋̂̈͗ẍ̴̨̪͖̫́̈̎ì̷̟̦̇̽s̵̙̩͂̋ţ̷̛̫̘͔͒` };
@@ -105,11 +105,10 @@ function createServer(io) {
 
       if (room instanceof Room) {
         console.log(`${socket.id} fetched ${id} details`);
-        
-        console.log(room)
+
         console.log(room.details)
         
-        socket.to(id).emit("server/room-details", room.details);
+        socket.to(id).emit("server/room-details", room);
       }
     }
     
@@ -119,7 +118,7 @@ function createServer(io) {
 
     function createRoom() {
       const room = new Room({ owner: socket.id });
-      socket.emit("server/new-room", room);
+      socket.emit("server/new-room", room.id);
       server.mountRoom(room);
     }
 

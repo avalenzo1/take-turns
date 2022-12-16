@@ -105,7 +105,11 @@ controller.mount({
     });
   });
 
-  socket.on("server/room-details", function (details) {
+  socket.on("server/room-details", function (room) {
+    console.log(details);
+    
+    let details = room.details;
+    
     metadata.url = input.value =
       "https://take-turns.glitch.me/?join=" + details.id;
     list.innerHTML = "";
@@ -124,16 +128,14 @@ controller.mount({
   });
 })();
 
-socket.on("server/new-room", function (r) {
+socket.on("server/new-room", function (id) {
   new Snackbar({
     id: "snackbar-container",
     message: "Room Created",
     type: "success",
   });
 
-  room = r;
-
-  socket.emit("server/join-room", r.id);
+  socket.emit("server/join-room", id);
 });
 
 socket.on("server/join-room", function (res) {
@@ -144,7 +146,8 @@ socket.on("server/join-room", function (res) {
         message: "Joined Room",
         type: "success",
       });
-
+      room = res.room;
+      
       controller.mountView("lobby-view");
       break;
     case "error":
