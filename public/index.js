@@ -1,5 +1,7 @@
 import { ViewController, Snackbar, clearEvents } from "./components.js";
 import { Game } from "./take-turns.js";
+import environment from './environment.json' assert { type: 'json' };
+
 
 const socket = io();
 const controller = new ViewController({
@@ -7,7 +9,7 @@ const controller = new ViewController({
   default: "home-view",
 });
 
-let gameroom, player;
+let room, player;
 
 controller.mount({
   "home-view": {
@@ -54,14 +56,14 @@ controller.mount({
       let counter = document.getElementById("new-view/player-count");
       let ready = document.getElementById("new-view/player-ready");
 
-      let shareData = {
+      let metadata = {
         title: "Take Turns",
         text: "Play Take Turns with Me!",
         url: "https://take-turns.glitch.me/?join=",
       };
 
       share.addEventListener("click", async () => {
-        await navigator.share(shareData);
+        await navigator.share(metadata);
       });
 
       input.addEventListener("click", () => {
@@ -100,7 +102,7 @@ controller.mount({
         console.log("HELLO?/");
       });
       
-      socket.emit("server/room-details", gameroom.id);
+      socket.emit("server/room-details", room.id);
     },
   },
 });
@@ -109,22 +111,23 @@ controller.mount({
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
-  const roomUID = params.join;
+  const id = params.join;
 
-  if (roomUID) {
-    socket.emit("server/join-room", roomUID);
+  if (id) {
+    socket.emit("server/join-room", id);
   }
 })();
 
-socket.on("server/new-room", function (room) {
+socket.on("server/new-room", function (r) {
   new Snackbar({
     id: "snackbar-container",
     message: "Room Created",
     type: "success",
   });
 
-  gameroom = room;
-  socket.emit("server/join-room", room.id);
+  room = r;
+  
+  socket.emit("server/join-room", r.id);
 });
 
 socket.on("server/join-room", function (res) {

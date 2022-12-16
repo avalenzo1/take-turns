@@ -95,6 +95,7 @@ function createServer(io) {
   
   io.on("connection", (socket) => {
     function fetchDetails(id) {
+      console.log(socket.rooms);
       let room = server.fetchRoom(id);
 
       if (room instanceof Room) {
@@ -146,17 +147,18 @@ function createServer(io) {
     fetchDetails(id);
   });
   
-  socket.on("server/player-ready", function(id) {
-    let room = server.fetchRoom(id);
+  socket.on("server/player-state", function(state) {
     
-    if (room instanceof Room) {
-      let player = room.fetchPlayer(socket.id);
+//     let room = server.fetchRoom();
+    
+//     if (room instanceof Room) {
+//       let player = room.fetchPlayer(socket.id);
       
-      if (player instanceof Player) {
-        player.ready = true;
-        fetchDetails(id);
-      }
-    }
+//       if (player instanceof Player) {
+//         player.ready = true;
+//         fetchDetails(id);
+//       }
+//     }
   });
   
   socket.on("server/join-room", function(id) {
