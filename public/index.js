@@ -95,6 +95,8 @@ controller.mount({
           },
         });
         ready.disabled = true;
+        
+        controller.mountView("game-view");
       });
 
       socket.on("server/room-details", function (details) {
@@ -118,6 +120,11 @@ controller.mount({
       socket.emit("server/room-details", room.id);
     },
   },
+  "game-view": {
+    mounted() {
+      alert("game start!")
+    }
+  }
 });
 
 (function () {
