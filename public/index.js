@@ -9,6 +9,7 @@ const controller = new ViewController({
 });
 
 let room, player;
+const game = new Game();
 
 controller.mount({
   "home-view": {
@@ -94,9 +95,10 @@ controller.mount({
             ready: true,
           },
         });
+        
         ready.disabled = true;
         
-        controller.mountView("game-view");
+        // controller.mountView("game-view");
       });
 
       socket.on("server/room-details", function (details) {
