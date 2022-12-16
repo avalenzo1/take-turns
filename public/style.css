@@ -4,6 +4,13 @@
   --tt-primary: rgba(var(--tt-primary-rgb), 1);
   --tt-secondary-rgb: 50, 50, 50;
   --tt-secondary: rgba(var(--tt-secondary-rgb), 1);
+  
+  --tt-info-rgb: var(--tt-secondary-rgb);
+  --tt-info: var(--tt-secondary);
+  --tt-warning-rgb: ;
+  --tt-warning: rgba(var(--tt-warning-rgb), 1);
+  --tt-danger-rgb: ;
+  --tt-danger: rgba(var(--tt-danger-rgb), 1);
 
   --gutter-x: 25%;
   --gutter-y: 5rem;
