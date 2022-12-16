@@ -200,7 +200,6 @@ body {
 
 .t-btn--full {
   width: 100%;
-  border-radius: 0;
 }
 
 .t-btn--large {
@@ -219,6 +218,10 @@ body {
   flex: 1;
   padding: 1rem var(--gutter-x);
   width: 100%;
+}
+
+.d-flex {
+  display: flex;
 }
 
 .justify-center {
