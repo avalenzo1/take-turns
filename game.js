@@ -105,12 +105,16 @@ function createServer(io) {
 
       if (room instanceof Room) {
         console.log(`${socket.id} fetched ${id} details`);
+        
+        console.log(room)
+        console.log(room.details)
+        
         socket.to(id).emit("server/room-details", room.details);
       }
     }
     
     function setState(state) {
-      player.ready = state.ready;
+      if (state.ready !== undefined) player.ready = state.ready;
     }
 
     function createRoom() {
@@ -155,11 +159,11 @@ function createServer(io) {
     fetchDetails(id);
   });
   
-  socket.on("server/player-state", function(state) {
-    let room = player.room;
+  socket.on("server/player-state", function(e) {
+    let room = server.fetchRoom(e.id);
     
     if (room instanceof Room) {
-      setState(state);
+      setState(e.state);
       fetchDetails(room.id);
     }
   });

@@ -97,7 +97,12 @@ controller.mount({
   });
 
   ready.addEventListener("click", () => {
-    socket.emit("server/player-state", { ready: true });
+    socket.emit("server/player-state", {
+      id: room.id,
+      state: {
+        ready: true
+      }
+    });
   });
 
   socket.on("server/room-details", function (details) {
