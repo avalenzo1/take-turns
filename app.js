@@ -17,11 +17,14 @@ app.get("/", (req, res) => {
 const lobby = new Lobby(io);
 
 io.on("connection", (socket) => {
-  function fetchDetails(uid) {
+  function fetchDetails() {
+    let uid = Array.from(socket.rooms)[1];
     let room = lobby.fetchRoom(uid);
     
     if (room instanceof Room) {
+      
       console.log(`${socket.id} fetched ${uid} details`);
+      
       socket.to(uid).emit("server/room-details", room.details);
     }
   }

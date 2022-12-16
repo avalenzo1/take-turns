@@ -93,8 +93,7 @@ controller.mount({
   });
 
   ready.addEventListener("click", () => {
-    socket.emit("server/player-ready", game.uid);
-    ready.setAttribute("disabled", "");
+    socket.emit("server/player-state", { ready: true });
   });
 
   socket.emit("server/room-details", game.uid);
