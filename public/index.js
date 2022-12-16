@@ -49,19 +49,26 @@ controller.mount({
   },
 
   "lobby-view": {
-    mounted() {
+    mounted(view) {
       let input = document.getElementById("new-view/room-url");
       let share = document.getElementById("new-view/room-share");
       let list = document.getElementById("new-view/player-list");
       let counter = document.getElementById("new-view/player-count");
       let ready = document.getElementById("new-view/player-ready");
-      let cancel = document.querySelector('a');
+      let cancel = view.querySelectorAll('[data-navigate="back"]');
 
       let metadata = {
         title: "Take Turns",
         text: "Play Take Turns with Me!",
         url: "https://take-turns.glitch.me/?join=",
       };
+      
+            
+      new Snackbar({
+          id: "snackbar-container",
+          message: "HELLO??",
+          type: "success",
+        });
       
       cancel.style.backgroundColor = "#000 !important";
 
