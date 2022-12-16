@@ -55,7 +55,7 @@ controller.mount({
       let list = document.getElementById("new-view/player-list");
       let counter = document.getElementById("new-view/player-count");
       let ready = document.getElementById("new-view/player-ready");
-      let cancel = view.querySelectorAll('[data-navigate="back"]');
+      let cancel = view.querySelector('[data-navigate="back"]');
 
       let metadata = {
         title: "Take Turns",
@@ -63,36 +63,41 @@ controller.mount({
         url: "https://take-turns.glitch.me/?join=",
       };
       
-            
-      new Snackbar({
-          id: "snackbar-container",
-          message: "HELLO??",
-          type: "success",
-        });
-      
-      cancel.style.backgroundColor = "#000 !important";
+      cancel.style.back
 
       cancel.addEventListener("click", () => {
-        alert("HI!!");
-        socket.emit("server/leave-room", id);
+        socket.emit("server/leave-room", room.id);
+        
+        new Snackbar({
+          id: "snackbar-container",
+          message: "Copied Link",
+          type: "danger",
+        });
       });
 
       share.addEventListener("click", async () => {
         await navigator.share(metadata);
       });
 
-      input.addEventListener("click", () => {
+      input.addEventListener("click", async () => {
         input.select();
         input.setSelectionRange(0, 99999); // For mobile devices
 
-        // Copy the text inside the text field
-        navigator.clipboard.writeText(input.value);
-
-        new Snackbar({
-          id: "snackbar-container",
-          message: "Copied Link",
-          type: "success",
-        });
+        try {
+          await navigator.clipboard.writeText(input.value);
+          
+          new Snackbar({
+            id: "snackbar-container",
+            message: "Copied Link",
+            type: "success",
+          });
+        } catch (e) {
+          new Snackbar({
+            id: "snackbar-container",
+            message: "Copied Link",
+            type: "danger",
+          });
+        }
       });
 
       ready.addEventListener("click", () => {
@@ -122,8 +127,6 @@ controller.mount({
 
           list.appendChild(li);
         }
-
-        console.log("HELLO?/");
       });
 
       socket.emit("server/room-details", room.id);
