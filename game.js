@@ -3,10 +3,14 @@ function UID() {
 }
 
 class Player {
-  constructor({ name, id }) {
+  constructor(id) {
     this.id = id;
     this.name = `Player #` + this.id;
     this.ready = false;
+  }
+  
+  mountRoom(room) {
+    this.room = room;
   }
 }
 
@@ -94,7 +98,7 @@ function createServer(io) {
   let server = new Server();
   
   io.on("connection", (socket) => {
-    let socket = new Socket(socket);
+    let player = new Player(socket.id);
     
     function fetchDetails(id) {
       let room = server.fetchRoom(id);
@@ -112,7 +116,6 @@ function createServer(io) {
     }
 
     function joinRoom(id) {
-      const player = new Player({ id: socket.id });
       const response = server.join(player, id);
 
       socket.join(id);
@@ -149,17 +152,12 @@ function createServer(io) {
   });
   
   socket.on("server/player-state", function(state) {
+    let room = player.room;
     
-//     let room = server.fetchRoom();
-    
-//     if (room instanceof Room) {
-//       let player = room.fetchPlayer(socket.id);
-      
-//       if (player instanceof Player) {
-//         player.ready = true;
-//         fetchDetails(id);
-//       }
-//     }
+    if (room instanceof Room) {
+      player.ready = true;
+      fetchDetails(room.id);
+    }
   });
   
   socket.on("server/join-room", function(id) {
