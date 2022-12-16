@@ -108,6 +108,10 @@ function createServer(io) {
         socket.to(id).emit("server/room-details", room.details);
       }
     }
+    
+    function setState(state) {
+      player.ready = state.ready;
+    }
 
     function createRoom() {
       const room = new Room({ owner: socket.id });
@@ -118,7 +122,7 @@ function createServer(io) {
     function joinRoom(id) {
       const response = server.join(player, id);
 
-      socket.join(id);
+      if (response.type === 'success') socket.join(id);
       socket.emit("server/join-room", response);
     }
 
@@ -155,7 +159,7 @@ function createServer(io) {
     let room = player.room;
     
     if (room instanceof Room) {
-      player.ready = true;
+      setState(state);
       fetchDetails(room.id);
     }
   });
