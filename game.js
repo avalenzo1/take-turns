@@ -105,7 +105,7 @@ function createServer(io) {
 
     function createRoom() {
       const room = new Room({ owner: socket.id });
-      socket.emit("server/new-room", room.id);
+      socket.emit("server/new-room", room);
       server.mountRoom(room);
     }
 
