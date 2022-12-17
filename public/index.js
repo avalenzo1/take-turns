@@ -115,21 +115,18 @@ controller.mount({
         counter.innerHTML = details.playerList.length;
 
         for (let player of details.playerList) {
-          let item = document.createElement("li");
-              item.setAttribute("data-player-id", player.id);
-              item.classList.add("t-list-group-item");
-              item.innerHTML = `${player.name} ${ player.ready ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }`;
-
-          let old = document.getElementById(id);
-              
-          console.log(old);
-          console.log(item);
+          let old = list.querySelector(`li[data-player-id="${player.id}"]`);
+          
+          console.log(old)
           
           if (old) {
-            console.log("HELLO?");
-          } else {
-            console.log("NO?");
-            item.id = id;
+            console.log("OLD")
+          } else {              
+            let item = document.createElement("li");
+                item.setAttribute("data-player-id", player.id);
+                item.classList.add("t-list-group-item");
+                item.innerHTML = `${player.name} ${ player.ready ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }`;
+
             list.appendChild(item);
           }
         }
