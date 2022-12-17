@@ -51,7 +51,8 @@ controller.mount({
       let counter = document.getElementById("lobby-view/player-count");
       let ready = document.getElementById("lobby-view/player-ready");
       let cancel = view.querySelector('[data-navigate="back"]');
-
+      let loader = document.getElementById("lobby-view/loader");
+      
       let metadata = {
         title: "Take Turns",
         text: "Play Take Turns with Me!",
@@ -104,6 +105,8 @@ controller.mount({
       });
 
       socket.on("server/room-details", function (details) {
+        hideElement(loader);
+        
         if (details.playerList.length > 1) {
           hideElement(party);
           showElement(isolated);
@@ -112,7 +115,7 @@ controller.mount({
           showElement(party);
         }
         
-        title.innerHTML = details.id
+        title.innerHTML = details.id;
         
         metadata.url = input.value =
           "https://take-turns.glitch.me/?join=" + details.id;
