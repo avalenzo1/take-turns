@@ -116,9 +116,11 @@ controller.mount({
 
         for (let player of details.playerList) {
           let li = document.createElement("li");
-
+          
           li.innerHTML = `
             ${player.name}
+            
+            ${ player.ready ? '<span class="material-symbols-sharp">done</span>' : '' }
           `;
 
           list.appendChild(li);
