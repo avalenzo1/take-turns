@@ -228,10 +228,6 @@ body {
   border-radius: 0.5rem;
 }
 
-.t-btn:focus {
-  border: solid 0px 2px #000;
-}
-
 .t-btn:disabled {
   background-color: #cfcfcf;
   color: #333333;
@@ -259,7 +255,7 @@ body {
 .t-btn:hover,
 .t-field:focus {
   outline: none;
-  box-shadow: 0 2px 5px rgba(var(--tt-primary-rgb), 0.25);
+  box-shadow: 0 3px 4px rgba(var(--tt-primary-rgb), 0.3);
 }
 
 .t-view {

@@ -52,6 +52,7 @@ controller.mount({
       let isolated = document.getElementById("lobby-view/isolated-view");
       let party = document.getElementById("lobby-view/party-view");
       let input = document.getElementById("lobby-view/room-url");
+      let title = document.getElementById("lobby-view/room-id");
       let share = document.getElementById("lobby-view/room-share");
       let list = document.getElementById("lobby-view/player-list");
       let counter = document.getElementById("lobby-view/player-count");
@@ -117,6 +118,8 @@ controller.mount({
           hideElement(isolated);
           showElement(party);
         }
+        
+        title.innerHTML = details.id
         
         metadata.url = input.value =
           "https://take-turns.glitch.me/?join=" + details.id;

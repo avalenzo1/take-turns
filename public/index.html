@@ -53,7 +53,7 @@
               <h2>Enter Room ID</h2>
             </header>
             <form class="join-lookup">
-              <input class="t-field" id="join-view/room-input" />
+              <input class="t-field" oninput="this.value = this.value.toUpperCase()" id="join-view/room-input" />
               <button type="submit" class="t-btn" id="join-view/room-submit">
                 <span class="material-symbols-sharp">send</span>
               </button>
@@ -71,7 +71,7 @@
           <a class="t-btn" href="#" data-link="home-view" data-navigate="back">
             <span class="material-symbols-sharp">arrow_back</span>
           </a>
-          <div class="nav-title">New Game</div>
+          <div class="nav-title">Room - <span id="lobby-view/room-id"></span></div>
         </nav>
         <div class="t-view">
           <div class="d-flex justify-right">
