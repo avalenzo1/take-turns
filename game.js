@@ -113,6 +113,7 @@ class Room {
 
 function createServer(io) {
   let server = new Server();
+  let connectedUsers = {};
   
   io.on("connection", (socket) => {
     let player = new Player(socket.id);
