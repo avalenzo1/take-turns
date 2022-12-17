@@ -105,6 +105,19 @@ body {
   --bg-tint-rgb: var(--tt-danger-rgb);
 }
 
+.t-alert {
+  --bg-tint: var(--tt-primary);
+  --bg-tint-rgb: var(--tt-primary-rgb);
+  
+  position: relative;
+  background-color: rgba(var(--bg-tint-rgb), 1);
+  color: #ffffff;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(var(--bg-tint-rgb),0.25);
+}
+
 .t-snackbar--fade-in {
   animation: 0.25s slide-in-top, 0.5s fade-in;
 }
@@ -185,8 +198,6 @@ body {
   transition: box-shadow 0.2s;
   border-radius: 0.5rem;
 }
-
-.t-
 
 .t-btn:disabled {
   background-color: #cfcfcf;
