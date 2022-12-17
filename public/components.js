@@ -136,11 +136,11 @@ function clearEvents(parent) {
 }
 
 function hideElement(element) {
-  element.removeAttribute("hidden");
+  element.setAttribute("hidden", "");
 }
 
 function showElement(element) {
-  element.setAttribute("hidden", "");
+  element.removeAttribute("hidden");
 }
 
 export { ViewController, Snackbar, clearEvents, hideElement, showElement };

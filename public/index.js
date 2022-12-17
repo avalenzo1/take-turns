@@ -100,19 +100,21 @@ controller.mount({
         });
         
         ready.disabled = true;
-        
-        // controller.mountView("game-view");
+      });
+      
+      socket.on("server/room-ready", function() {
+        controller.mountView("game-view");
       });
 
       socket.on("server/room-details", function (details) {
         hideElement(loader);
         
         if (details.playerList.length > 1) {
-          hideElement(party);
-          showElement(isolated);
-        } else {
           hideElement(isolated);
           showElement(party);
+        } else {
+          hideElement(party);
+          showElement(isolated);
         }
         
         title.innerHTML = details.id;

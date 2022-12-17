@@ -77,6 +77,17 @@ class Room {
     return this.playerList.findIndex(player => player.id === id);
   }
   
+  get ready() {
+    let isReady;
+    
+    for (let player of this.playerList) {
+      if (!player.ready) isReady = false;
+      break;
+    }
+    
+    return isReady;
+  }
+  
   join(player) {
     if (player instanceof Player) {
       this.playerList.push(player);
@@ -93,7 +104,8 @@ class Room {
     return {
       owner: this.owner,
       playerList: this.playerList,
-      id: this.id
+      id: this.id,
+      ready: this.ready
     };
   }
 }
@@ -123,6 +135,16 @@ function createServer(io) {
       const room = new Room({ owner: socket.id });
       socket.emit("server/new-room", room.id);
       server.mountRoom(room);
+    }
+    
+    function checkRoom(id) {
+      let room = server.fetchRoom(id);
+      
+      if (room instanceof Room && room.ready) {
+        console.log("room ready!")
+        socket.to(id).emit("server/room-ready");
+        socket.emit("server/room-ready");
+      }
     }
 
     function joinRoom(id) {
@@ -163,6 +185,7 @@ function createServer(io) {
     
   socket.on("server/join-room", function(id) {
     joinRoom(id);
+    checkRoom(id);
   });
     
   socket.on("server/leave-room", function(id) {
