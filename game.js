@@ -78,9 +78,10 @@ class Room {
   }
   
   get ready() {
-    let isReady;
+    let isReady = true;
     
     for (let player of this.playerList) {
+      console.log("checking")
       if (!player.ready) isReady = false;
       break;
     }
@@ -141,9 +142,10 @@ function createServer(io) {
       let room = server.fetchRoom(id);
       
       if (room instanceof Room && room.ready) {
-        console.log("room ready!")
+        console.log("READY!!");
+        
         socket.to(id).emit("server/room-ready");
-        socket.emit("server/room-ready");
+        socket.emit("server/room-ready"); 
       }
     }
 
@@ -155,6 +157,7 @@ function createServer(io) {
       }
       
       socket.emit("server/join-room", response);
+      checkRoom(id);
     }
 
     function leaveRoom(roomID, playerID) {
@@ -185,7 +188,6 @@ function createServer(io) {
     
   socket.on("server/join-room", function(id) {
     joinRoom(id);
-    checkRoom(id);
   });
     
   socket.on("server/leave-room", function(id) {
