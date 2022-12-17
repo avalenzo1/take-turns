@@ -308,7 +308,6 @@ body {
   background-color: var(--tt-secondary);
   color: #ffffff;
   border-radius: 25px;
-  animation: 0.25s slide-in-left, 0.5s fade-in;
 }
 
 @keyframes fade-in {
