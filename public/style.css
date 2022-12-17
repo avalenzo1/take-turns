@@ -11,6 +11,9 @@
   --tt-warning: rgba(var(--tt-warning-rgb), 1);
   --tt-danger-rgb: 255, 5, 0;
   --tt-danger: rgba(var(--tt-danger-rgb), 1);
+  
+  --tt-light-rgb: 245, 245, 245;
+  --tt-light: rgba(var(--tt-light-rgb), 1);
 
   --gutter-x: 25%;
   --gutter-y: 5rem;
@@ -106,12 +109,13 @@ body {
 }
 
 .t-alert {
-  --bg-tint: var(--tt-primary);
-  --bg-tint-rgb: var(--tt-primary-rgb);
+  --bg-tint: var(--tt-light);
+  --bg-tint-rgb: var(--tt-light-rgb);
+  --color-tint: inherit;
   
   position: relative;
   background-color: rgba(var(--bg-tint-rgb), 1);
-  color: #ffffff;
+  color: var(--color-tint);
   width: 100%;
   padding: 1rem;
   border-radius: 0.5rem;
