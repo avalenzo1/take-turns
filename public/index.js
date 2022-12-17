@@ -120,7 +120,7 @@ controller.mount({
           li.innerHTML = `
             ${player.name}
             
-            ${ player.ready ? '<span class="material-symbols-sharp">done</span>' : '' }
+            ${ player.ready ? '<span class="material-symbols-sharp">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }
           `;
 
           list.appendChild(li);
