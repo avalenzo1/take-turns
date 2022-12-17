@@ -1,3 +1,7 @@
+const { uniqueNamesGenerator, adjectives, colors, animals } = require('unique-names-generator');
+
+const randomName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals] });
+
 function UID() {
   return Math.random().toString(36).slice(-6).toUpperCase();
 }
@@ -5,7 +9,7 @@ function UID() {
 class Player {
   constructor(id) {
     this.id = id;
-    this.name = `Player #` + this.id;
+    this.name = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], length: 3 });
     this.ready = false;
   }
   

@@ -20,6 +20,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html,
 body,
 button,
@@ -292,7 +296,7 @@ body {
   }
 }
 
-.lobby-view .t-list-group {
+.t-list-group {
   display: flex;
   flex-direction: column;
   list-style-type: none;
@@ -301,13 +305,14 @@ body {
   gap: 0.5rem;
 }
 
-.lobby-view .t-list-group .t-list-group-item {
+.t-list-group .t-list-group-item {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 1rem;
   background-color: var(--tt-secondary);
   color: #ffffff;
   border-radius: 25px;
+  box-shadow: 0 2px 5px rgba(var(--tt-secondary-rgb),0.25);
 }
 
 .lobby-view .t-list-group .t-list-group-item--fade-in {
