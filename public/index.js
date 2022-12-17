@@ -4,7 +4,7 @@ import environment from "./environment.json" assert { type: "json" };
 
 const socket = io();
 const controller = new ViewController({
-  id: "view-controller",
+  id: "main-controller",
   default: "home-view",
 });
 
@@ -48,6 +48,7 @@ controller.mount({
   },
 
   "lobby-view": {
+    
     mounted(view) {
       let input = document.getElementById("new-view/room-url");
       let share = document.getElementById("new-view/room-share");

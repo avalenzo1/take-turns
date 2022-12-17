@@ -27,8 +27,8 @@
     <title>Take Turns!</title>
   </head>
   <body>
-    <main id="view-controller" class="view-controller">
-      <div class="page-view" data-view="home-view">
+    <main id="main-controller" class="view-controller">
+      <section class="page-view" data-view="home-view">
         <div class="t-view justify-center">
           <header class="t-header">
             <h1>Take Turns!</h1>
@@ -39,9 +39,8 @@
             <a class="t-btn" data-link="new-view">New Game</a>
           </nav>
         </div>
-      </div>
-
-      <div class="page-view" data-view="join-view">
+      </section>
+      <section class="page-view" data-view="join-view">
         <nav class="t-nav">
           <a class="t-btn" href="#" data-link="home-view" data-navigate="back">
             <span class="material-symbols-sharp">arrow_back</span>
@@ -61,15 +60,13 @@
             </form>
           </div>
         </div>
-      </div>
-
-      <div class="page-view" data-view="new-view">
+      </section>
+      <section class="page-view" data-view="new-view">
         <div class="t-view justify-center align-center">
           <span> Loading... </span>
         </div>
-      </div>
-
-      <div class="page-view lobby-view" data-view="lobby-view">
+      </section>
+      <section class="page-view" data-view="lobby-view">
         <nav class="t-nav">
           <a class="t-btn" href="#" data-link="home-view" data-navigate="back">
             <span class="material-symbols-sharp">arrow_back</span>
@@ -94,25 +91,32 @@
               <span class="material-symbols-sharp">share</span>
             </button>
           </fieldset>
+          
+          <main id="lobby-controller" class="view-controller">
+            <section class="flex-grow" id="lobby-view/isolated-view" data-view="isolated-view">
+              <img src="https://cdn.glitch.global/a7aea887-b529-44f3-9bea-e8cf36a42cf4/lonely.gif?v=1671242627543">
+            </section>
+          </main>
 
-          <section class="flex-grow" id="new-view/player-lobby">
-            <h3>Players (<span id="new-view/player-count">0</span>)</h3>
+          <h3>Players (<span id="new-view/player-count">0</span>)</h3>
 
-            <ul class="t-list-group" id="new-view/player-list"></ul>
-
+            <ul class="t-list-group" id="new-view/player-list">
+            
+            </ul>
+            
             <button
-              class="t-btn t-btn--prominent t-btn--full t-btn--large"
-              id="new-view/player-ready"
+            class="t-btn t-btn--prominent t-btn--full t-btn--large"
+            id="new-view/player-ready"
             >
-              I'm ready!
-            </button>
-          </section>
+            I'm ready!
+          </button>
         </div>
         <div class="page-view" data-view="game-view">
           <canvas id="game-view/canvas"></canvas>
         </div>
-      </div>
+      </section>
     </main>
-    <div class="t-snackbar-container t-gutters" id="snackbar-container"></div>
+    
+    <aside class="t-snackbar-container t-gutters" id="snackbar-container"></aside>
   </body>
 </html>
