@@ -292,7 +292,7 @@ body {
   }
 }
 
-.lobby-view .t-player-list {
+.lobby-view .t-list-group {
   display: flex;
   flex-direction: column;
   list-style-type: none;
@@ -301,7 +301,7 @@ body {
   gap: 0.5rem;
 }
 
-.lobby-view .t-player-list li {
+.lobby-view .t-list-group .t-list-group-item {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 1rem;
@@ -309,6 +309,15 @@ body {
   color: #ffffff;
   border-radius: 25px;
 }
+
+.lobby-view .t-list-group .t-list-group-item--fade-in {
+  animation: 0.25s slide-in-top, 0.5s fade-in;
+}
+
+.lobby-view .t-list-group .t-list-group-item--fade-out {
+  animation: 0.25s slide-out-top, 0.5s fade-out;
+}
+
 
 @keyframes fade-in {
   from {

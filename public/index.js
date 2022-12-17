@@ -115,12 +115,14 @@ controller.mount({
         counter.innerHTML = details.playerList.length;
 
         for (let player of details.playerList) {
-          let li = document.createElement("li");
-              li.id = `new-view/player-list/${play`;
-          
-          li.innerHTML = `${player.name} ${ player.ready ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }`;
+          let id = `new-view/player-list/${player.id}`;
+          let item = document.createElement("li");
+              item.classList.add("t-list-group-item");
+              item.innerHTML = `${player.name} ${ player.ready ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }`;
 
-          list.appendChild(li);
+          
+          
+          list.appendChild(item);
         }
       });
 
