@@ -52,8 +52,8 @@
             <header class="t-header">
               <h2>Enter Room ID</h2>
             </header>
-            <form class="join-lookup">
-              <input class="t-field" oninput="this.value = this.value.toUpperCase()" id="join-view/room-input" />
+            <form class="join-lookup" id="join-view/room-form">
+              <input class="t-field" maxlength="6" oninput="this.value = this.value.toUpperCase()" id="join-view/room-input" required />
               <button type="submit" class="t-btn" id="join-view/room-submit">
                 <span class="material-symbols-sharp">send</span>
               </button>

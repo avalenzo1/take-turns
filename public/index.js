@@ -27,23 +27,16 @@ controller.mount({
   },
 
   "join-view": {
-    elements: {
-      submit: document.getElementById("join-view/room-submit"),
-    },
-    events: {
-      submit(e) {
-        e.preventDefault();
-        socket.emit(
-          "server/join-room",
-          document.getElementById("join-view/room-input").value
-        );
-      },
-    },
     mounted(view) {
-      this.elements.submit.addEventListener("click", this.events.submit);
+      let form = document.getElementById("join-view/room-form");
+      let input = document.getElementById("join-view/room-input");
+      
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        socket.emit("server/join-room", input.value);
+      });
     },
     unmounted(view) {
-      this.elements.submit.removeEventListener("click", this.events.submit);
     },
   },
 
