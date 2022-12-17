@@ -1,4 +1,4 @@
-import { ViewController, Snackbar, clearEvents } from "./components.js";
+import { ViewController, Snackbar, clearEvents, hideElement, showElement } from "./components.js";
 import { Game } from "./take-turns.js";
 import environment from "./environment.json" assert { type: "json" };
 
@@ -110,6 +110,14 @@ controller.mount({
       });
 
       socket.on("server/room-details", function (details) {
+        if (details.playerList.length > 1) {
+          hideElement(party);
+          showElement(isolated);
+        } else {
+          hideElement(isolated);
+          showElement(party);
+        }
+        
         metadata.url = input.value =
           "https://take-turns.glitch.me/?join=" + details.id;
         list.innerHTML = "";
