@@ -21,7 +21,7 @@
 }
 
 [hidden] {
-  display: none !important;
+  display: none;
 }
 
 html,
@@ -267,7 +267,6 @@ body {
     transform: translate(0, 0);
   }
 }
-
 
 @keyframes slide-out-right {
   from {

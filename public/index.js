@@ -48,13 +48,14 @@ controller.mount({
   },
 
   "lobby-view": {
-    
     mounted(view) {
-      let input = document.getElementById("new-view/room-url");
-      let share = document.getElementById("new-view/room-share");
-      let list = document.getElementById("new-view/player-list");
-      let counter = document.getElementById("new-view/player-count");
-      let ready = document.getElementById("new-view/player-ready");
+      let isolated = document.getElementById("lobby-view/isolated-view");
+      let party = document.getElementById("lobby-view/party-view");
+      let input = document.getElementById("lobby-view/room-url");
+      let share = document.getElementById("lobby-view/room-share");
+      let list = document.getElementById("lobby-view/player-list");
+      let counter = document.getElementById("lobby-view/player-count");
+      let ready = document.getElementById("lobby-view/player-ready");
       let cancel = view.querySelector('[data-navigate="back"]');
 
       let metadata = {
