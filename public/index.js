@@ -115,14 +115,23 @@ controller.mount({
         counter.innerHTML = details.playerList.length;
 
         for (let player of details.playerList) {
-          let id = `new-view/player-list/${player.id}`;
           let item = document.createElement("li");
+              item.setAttribute("data-player-id", player.id);
               item.classList.add("t-list-group-item");
               item.innerHTML = `${player.name} ${ player.ready ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }`;
 
+          let old = document.getElementById(id);
+              
+          console.log(old);
+          console.log(item);
           
-          
-          list.appendChild(item);
+          if (old) {
+            console.log("HELLO?");
+          } else {
+            console.log("NO?");
+            item.id = id;
+            list.appendChild(item);
+          }
         }
       });
 
