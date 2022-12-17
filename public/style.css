@@ -21,7 +21,7 @@
 }
 
 [hidden] {
-  display: none;
+  display: none !important;
 }
 
 html,
@@ -186,15 +186,7 @@ body {
   border-radius: 0.5rem;
 }
 
-.t-label {
-  --bg-tint: var(--tt-primary);
-  --color-tint: #ffffff;
-  
-  display: inline-block;
-  position: relative;
-  background-color: var(--bg-tint);
-  color: var(--color-tint);
-}
+.t-
 
 .t-btn:disabled {
   background-color: #cfcfcf;

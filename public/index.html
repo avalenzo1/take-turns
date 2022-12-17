@@ -92,17 +92,27 @@
             </button>
           </fieldset>
 
-          <section class="isolated-view flex-grow" id="lobby-view/isolated-view" hidden>
+          <section
+            class="isolated-view flex-grow"
+            id="lobby-view/isolated-view"
+            hidden
+          >
+            <div class="t-alert">
+              You need at least 2 people to play.
+            </div>
             <img
               src="https://cdn.glitch.global/a7aea887-b529-44f3-9bea-e8cf36a42cf4/lonely2.gif?v=1671245175801"
             />
-            <span class="t-label">Lonely Doge...</span>
           </section>
 
-          <section class="party-view flex-grow" id="lobby-view/party-view" hidden>
+          <section
+            class="party-view flex-grow"
+            id="lobby-view/party-view"
+            hidden
+          >
             <h3>Players (<span id="lobby-view/player-count">0</span>)</h3>
 
-            <ul class="t-list-group" id="lobby-view/player-list"></ul>
+            <ul class="t-list-group flex-grow" id="lobby-view/player-list"></ul>
 
             <button
               class="t-btn t-btn--prominent t-btn--full t-btn--large"
@@ -111,12 +121,13 @@
               I'm ready!
             </button>
           </section>
-          
+
           <style>
             .party-view {
-              
+              display: flex;
+              flex-direction: column;
             }
-            
+
             .isolated-view {
               display: grid;
               place-items: center;
