@@ -1,16 +1,19 @@
 :root {
   --font-family: "Roboto Mono", monospace;
+  
   --tt-primary-rgb: 255, 63, 0;
-  --tt-primary: rgba(var(--tt-primary-rgb), 1);
+  --tt-primary: rgb(var(--tt-primary-rgb));
   --tt-secondary-rgb: 50, 50, 50;
-  --tt-secondary: rgba(var(--tt-secondary-rgb), 1);
+  --tt-secondary: rgb(var(--tt-secondary-rgb));
   
   --tt-success-rgb: 75, 200, 115;
-  --tt-success: rgba(var(--tt-success-rgb), 1);
+  --tt-success: rgb(var(--tt-success-rgb));
+  --tt-info-rgb: 162, 196, 260;
+  --tt-info: rgb(var(--tt-info-rgb));
   --tt-warning-rgb: 255, 128, 0;
-  --tt-warning: rgba(var(--tt-warning-rgb), 1);
+  --tt-warning: rgb(var(--tt-warning-rgb));
   --tt-danger-rgb: 255, 5, 0;
-  --tt-danger: rgba(var(--tt-danger-rgb), 1);
+  --tt-danger: rgb(var(--tt-danger-rgb));
   
   --tt-light-rgb: 245, 245, 245;
   --tt-light: rgba(var(--tt-light-rgb), 1);
@@ -80,12 +83,13 @@ body {
 }
 
 .t-snackbar {
-  --bg-tint: var(--tt-secondary);
-  --bg-tint-rgb: var(--tt-secondary-rgb);
+  --bg-tint: var(--tt-light);
+  --bg-tint-rgb: var(--tt-light-rgb);
+  --color-tint: inherit;
   
   position: relative;
   background-color: var(--bg-tint);
-  color: #ffffff;
+  color: var(--color-tint);
   width: 100%;
   padding: 1rem;
   border-radius: 0.5rem;
@@ -93,19 +97,12 @@ body {
   box-shadow: 0 2px 5px rgba(var(--bg-tint-rgb),0.25);
 }
 
-.t-snackbar--success {
-  --bg-tint: var(--tt-success);
-  --bg-tint-rgb: var(--tt-success-rgb);
+.t-snackbar--fade-in {
+  animation: 0.25s slide-in-top, 0.5s fade-in;
 }
 
-.t-snackbar--warning {
-  --bg-tint: var(--tt-warning);
-  --bg-tint-rgb: var(--tt-warning-rgb);
-}
-
-.t-snackbar--danger {
-  --bg-tint: var(--tt-danger);
-  --bg-tint-rgb: var(--tt-danger-rgb);
+.t-snackbar--fade-out {
+  animation: 0.25s slide-out-top, 0.5s fade-out;
 }
 
 .t-alert {
@@ -122,12 +119,40 @@ body {
   box-shadow: 0 2px 5px rgba(var(--bg-tint-rgb),0.25);
 }
 
-.t-snackbar--fade-in {
-  animation: 0.25s slide-in-top, 0.5s fade-in;
+.t-snackbar--primary, .t-alert--primary {
+  --bg-tint: var(--tt-primary);
+  --bg-tint-rgb: var(--tt-primary-rgb);
+  --color-tint: white;
 }
 
-.t-snackbar--fade-out {
-  animation: 0.25s slide-out-top, 0.5s fade-out;
+.t-snackbar--secondary, .t-alert--secondary {
+  --bg-tint: var(--tt-secondary);
+  --bg-tint-rgb: var(--tt-secondary-rgb);
+  --color-tint: white;
+}
+
+.t-snackbar--success, .t-alert--success {
+  --bg-tint: var(--tt-success);
+  --bg-tint-rgb: var(--tt-success-rgb);
+  --color-tint: white;
+}
+
+.t-snackbar--warning, .t-alert--warning {
+  --bg-tint: var(--tt-warning);
+  --bg-tint-rgb: var(--tt-warning-rgb);
+  --color-tint: black;
+}
+
+.t-snackbar--danger, .t-alert--danger {
+  --bg-tint: var(--tt-danger);
+  --bg-tint-rgb: var(--tt-danger-rgb);
+  --color-tint: white;
+}
+
+.t-snackbar--info, .t-alert--info {
+  --bg-tint: var(--tt-info);
+  --bg-tint-rgb: var(--tt-info-rgb);
+  --color-tint: black;
 }
 
 .t-header {
@@ -201,6 +226,10 @@ body {
   padding: 0.5rem;
   transition: box-shadow 0.2s;
   border-radius: 0.5rem;
+}
+
+.t-btn:focus {
+  border: solid 0px 2px #000;
 }
 
 .t-btn:disabled {

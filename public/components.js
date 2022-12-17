@@ -2,7 +2,7 @@ class Snackbar {
   constructor({ id, message, type, timeout }) {
     this.id = id;
     this.message = document.createTextNode(message);
-    this.type = type;
+    this.type = type || "secondary";
     this.timeout = timeout || 2000;
 
     this.mountAlert();
