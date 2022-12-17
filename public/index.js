@@ -116,8 +116,9 @@ controller.mount({
 
         for (let player of details.playerList) {
           let li = document.createElement("li");
+              li.id = `new-view/player-list/${play`;
           
-          li.innerHTML = `${player.name} ${ player.ready ? '<span class="material-symbols-sharp">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }`;
+          li.innerHTML = `${player.name} ${ player.ready ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }`;
 
           list.appendChild(li);
         }
