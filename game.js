@@ -115,10 +115,7 @@ function createServer(io) {
   let server = new Server();
   let connectedUsers = {};
   
-  io.on("connection", (socket) => {
-    let player = new Player(socket.id);
-    
-    function fetchDetails(id) {
+  function fetchDetails(scid) {
       let room = server.fetchRoom(id);
 
       if (room instanceof Room) {
@@ -130,7 +127,7 @@ function createServer(io) {
     }
     
     function setState(state) {
-      if (state.ready !== undefined) player.ready = state.ready;
+      if (state.ready !== undefined) connectedUsers[socket.id].ready = state.ready;
     }
 
     function createRoom() {
@@ -151,7 +148,7 @@ function createServer(io) {
     }
 
     function joinRoom(id) {
-      const response = server.join(player, id);
+      const response = server.join(connectedUsers[socket.id], id);
 
       if (response.type === 'success') {
         socket.join(id);
@@ -173,8 +170,14 @@ function createServer(io) {
       }
     }
   
+  io.on("connection", (socket) => {
+    connectedUsers[socket.id] = new Player(socket.id);
+    
+    
+  
   io.of("/").adapter.on("join-room", (roomID, playerID) => {
     fetchDetails(roomID);
+    console.log(connectedUsers);
   });
   
   io.of("/").adapter.on("leave-room", (roomID, playerID) => {
@@ -206,6 +209,10 @@ function createServer(io) {
       setState(e.state);
       fetchDetails(room.id);
     }
+  });
+    
+  socket.on("disconnect", function() {
+    delete connectedUsers[socket.id];
   });
 });
 }
