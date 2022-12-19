@@ -115,7 +115,10 @@ function createServer(io) {
   let server = new Server();
   let connectedUsers = {};
   
-  function fetchDetails(scid) {
+  io.on("connection", (socket) => {
+    connectedUsers[socket.id] = new Player(socket.id);
+    
+    function fetchDetails(id) {
       let room = server.fetchRoom(id);
 
       if (room instanceof Room) {
@@ -169,11 +172,6 @@ function createServer(io) {
         fetchDetails(roomID);
       }
     }
-  
-  io.on("connection", (socket) => {
-    connectedUsers[socket.id] = new Player(socket.id);
-    
-    
   
   io.of("/").adapter.on("join-room", (roomID, playerID) => {
     fetchDetails(roomID);
