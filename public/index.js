@@ -1,4 +1,10 @@
-import { ViewController, Snackbar, clearEvents, hideElement, showElement } from "./components.js";
+import {
+  ViewController,
+  Snackbar,
+  clearEvents,
+  hideElement,
+  showElement,
+} from "./components.js";
 import { Game } from "./take-turns.js";
 import environment from "./environment.json" assert { type: "json" };
 
@@ -10,6 +16,17 @@ const controller = new ViewController({
 
 let room, player;
 const game = new Game();
+
+function startCanvas() {
+  let canvas = document.getElementById("game-view/canvas");
+  let ctx = canvas.getContext("2d");
+  
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, 100, 100);
+}
 
 controller.mount({
   "home-view": {
@@ -30,14 +47,13 @@ controller.mount({
     mounted(view) {
       let form = document.getElementById("join-view/room-form");
       let input = document.getElementById("join-view/room-input");
-      
+
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         socket.emit("server/join-room", input.value);
       });
     },
-    unmounted(view) {
-    },
+    unmounted(view) {},
   },
 
   "lobby-view": {
@@ -52,7 +68,7 @@ controller.mount({
       let ready = document.getElementById("lobby-view/player-ready");
       let cancel = view.querySelector('[data-navigate="back"]');
       let loader = document.getElementById("lobby-view/loader");
-      
+
       let metadata = {
         title: "Take Turns",
         text: "Play Take Turns with Me!",
@@ -61,7 +77,7 @@ controller.mount({
 
       cancel.addEventListener("click", () => {
         socket.emit("server/leave-room", room.id);
-        
+
         new Snackbar({
           id: "snackbar-container",
           message: "Left Room",
@@ -78,7 +94,7 @@ controller.mount({
 
         try {
           await navigator.clipboard.writeText(input.value);
-          
+
           new Snackbar({
             id: "snackbar-container",
             message: "Copied Link",
@@ -98,17 +114,17 @@ controller.mount({
             ready: true,
           },
         });
-        
+
         ready.disabled = true;
       });
-      
-      socket.on("server/room-ready", function() {
+
+      socket.on("server/room-ready", function () {
         controller.mountView("game-view");
       });
 
       socket.on("server/room-details", function (details) {
         hideElement(loader);
-        
+
         if (details.playerList.length > 1) {
           hideElement(isolated);
           showElement(party);
@@ -116,9 +132,9 @@ controller.mount({
           hideElement(party);
           showElement(isolated);
         }
-        
+
         title.innerHTML = details.id;
-        
+
         metadata.url = input.value =
           "https://take-turns.glitch.me/?join=" + details.id;
         list.innerHTML = "";
@@ -127,10 +143,14 @@ controller.mount({
 
         for (let player of details.playerList) {
           let item = document.createElement("li");
-              item.setAttribute("data-player-id", player.id);
-              item.classList.add("t-list-group-item");
-              item.innerHTML = `${player.name} ${ player.ready ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>' : '<span class="material-symbols-sharp">hourglass_top</span>' }`;
-          
+          item.setAttribute("data-player-id", player.id);
+          item.classList.add("t-list-group-item");
+          item.innerHTML = `${player.name} ${
+            player.ready
+              ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>'
+              : '<span class="material-symbols-sharp">hourglass_top</span>'
+          }`;
+
           list.appendChild(item);
         }
       });
@@ -140,9 +160,11 @@ controller.mount({
   },
   "game-view": {
     mounted() {
-      alert("game start!")
-    }
-  }
+      startCanvas();
+    },
+
+    unmounted() {},
+  },
 });
 
 (function () {
@@ -155,8 +177,6 @@ controller.mount({
     socket.emit("server/join-room", id);
   }
 })();
-
-(function () {})();
 
 socket.on("server/new-room", function (id) {
   new Snackbar({
