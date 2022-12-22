@@ -24,17 +24,38 @@ function startCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  let paths = [];
+  let path, paths = [];
   
   canvas.onmousedown = (e) => {
-    
+    path = new Path2D();
+    path.moveTo(e.clientX, e.clientY);
   };
   
   canvas.onmousemove = (e) => {
-    
+    path.lineTo(e.clientX, e.clientY);
   };
 
-  canvas.onmouseup
+  canvas.onmouseup = (e) => {
+    path.closePath();
+    paths.push(structuredClone(path));
+  }
+  
+  function loop() {
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    
+    ctx.fillStyle = "#f00";
+    ctx.fillRect(0,0,canvas.width, canvas.height);
+    
+    for (let region of paths) {
+      ctx.fillStyle = "#000";
+      ctx.stroke();
+      ctx.fill();
+    }
+    
+    window.requestAnimationFrame(loop);
+  }
+  
+  loop();
 }
 
 controller.mount({
