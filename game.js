@@ -123,6 +123,7 @@ function createServer(io) {
 
       if (room instanceof Room) {
         console.log(`${socket.id} fetched ${id} details`);
+        checkRoom(id);
         
         socket.to(id).emit("server/room-details", room.details);
         socket.emit("server/room-details", room.details);
