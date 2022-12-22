@@ -24,8 +24,17 @@ function startCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillRect(0, 0, 100, 100);
+  let paths = [];
+  
+  canvas.onmousedown = (e) => {
+    
+  };
+  
+  canvas.onmousemove = (e) => {
+    
+  };
+
+  canvas.onmouseup
 }
 
 controller.mount({

@@ -348,6 +348,10 @@ body {
   }
 }
 
+.t-canvas {
+  cursor: crosshair;
+}
+
 .t-list-group {
   display: flex;
   flex-direction: column;
