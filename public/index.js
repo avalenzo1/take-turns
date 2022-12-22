@@ -26,19 +26,19 @@ function startCanvas() {
 
   let path, paths = [];
   
-  canvas.onmousedown = (e) => {
+  canvas.addEventListener("mousedown", function (e) {
     path = new Path2D();
     path.moveTo(e.clientX, e.clientY);
-  };
+  });
   
-  canvas.onmousemove = (e) => {
+  canvas.addEventListener("mousemove", function (e) {
     path.lineTo(e.clientX, e.clientY);
-  };
+  });
 
-  canvas.onmouseup = (e) => {
+  canvas.addEventListener("mouseup", function (e) {
     path.closePath();
     paths.push(structuredClone(path));
-  }
+  });
   
   function loop() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
