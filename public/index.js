@@ -160,6 +160,11 @@ controller.mount({
   },
   "game-view": {
     mounted() {
+      new Snackbar({
+        id: "snackbar-container",
+        message: "Game Start!",
+      });
+      
       startCanvas();
     },
 

@@ -158,7 +158,6 @@ function createServer(io) {
       }
       
       socket.emit("server/join-room", response);
-      checkRoom(id);
     }
 
     function leaveRoom(roomID, playerID) {
