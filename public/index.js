@@ -41,10 +41,6 @@ function startCanvas() {
   
   canvas.addEventListener("mousemove", function (e) {
     if (active) path.push([e.clientX, e.clientY]);
-    
-    for (let i = 0; i < path.length; i++) {
-      path.st
-    }
   });
 
   canvas.addEventListener("mouseup", function (e) {
@@ -63,12 +59,15 @@ function startCanvas() {
       
       ctx.beginPath();
       
-      for (let i = 0; i < region.length; i++) {
+      let i = region.length;
+      
+      while (i--) {
         if (i === 0) {
           ctx.moveTo(region[i][0], region[i][1]);
         } else {
           ctx.lineTo(region[i][0], region[i][1]);
-        } 
+          ctx.lineTo(Math.sin(region[i][1]), Matregion[i][0])
+        }
       }
       
       ctx.stroke();
