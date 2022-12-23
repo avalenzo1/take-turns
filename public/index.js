@@ -27,31 +27,51 @@ function startCanvas() {
   let path, paths = [];
   let active = false;
   
+  window.addEventListener("resize", function (e) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+  
   canvas.addEventListener("mousedown", function (e) {
     active = true;
-    path = new Path2D();
+    path = [];
     paths.push(path);
-    path.moveTo(e.clientX, e.clientY);
+    path.push([e.clientX, e.clientY]);
   });
   
   canvas.addEventListener("mousemove", function (e) {
-    if (active) path.lineTo(e.clientX, e.clientY);
+    if (active) path.push([e.clientX, e.clientY]);
+    
+    for (let i = 0; i < path.length; i++) {
+      path.st
+    }
   });
 
   canvas.addEventListener("mouseup", function (e) {
-    
     active = false;
   });
   
   function loop() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
     
-    ctx.fillStyle = "#f00";
+    ctx.fillStyle = "#fff";
     ctx.fillRect(0,0,canvas.width, canvas.height);
     
     for (let region of paths) {
+      ctx.lineWidth = 5;
       ctx.fillStyle = "#000";
-      ctx.stroke(region);
+      
+      ctx.beginPath();
+      
+      for (let i = 0; i < region.length; i++) {
+        if (i === 0) {
+          ctx.moveTo(region[i][0], region[i][1]);
+        } else {
+          ctx.lineTo(region[i][0], region[i][1]);
+        } 
+      }
+      
+      ctx.stroke();
     }
     
     window.requestAnimationFrame(loop);
