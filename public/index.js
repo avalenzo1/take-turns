@@ -66,7 +66,6 @@ function startCanvas() {
           ctx.moveTo(region[i][0], region[i][1]);
         } else {
           ctx.lineTo(region[i][0], region[i][1]);
-          ctx.lineTo(Math.sin(region[i][1]), Matregion[i][0])
         }
       }
       
