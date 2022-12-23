@@ -25,19 +25,22 @@ function startCanvas() {
   canvas.height = window.innerHeight;
 
   let path, paths = [];
+  let active = false;
   
   canvas.addEventListener("mousedown", function (e) {
+    active = true;
     path = new Path2D();
+    paths.push(path);
     path.moveTo(e.clientX, e.clientY);
   });
   
   canvas.addEventListener("mousemove", function (e) {
-    path.lineTo(e.clientX, e.clientY);
+    if (active) path.lineTo(e.clientX, e.clientY);
   });
 
   canvas.addEventListener("mouseup", function (e) {
-    path.closePath();
-    paths.push(structuredClone(path));
+    
+    active = false;
   });
   
   function loop() {
@@ -48,8 +51,7 @@ function startCanvas() {
     
     for (let region of paths) {
       ctx.fillStyle = "#000";
-      ctx.stroke();
-      ctx.fill();
+      ctx.stroke(region);
     }
     
     window.requestAnimationFrame(loop);
