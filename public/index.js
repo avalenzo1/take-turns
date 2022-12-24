@@ -5,17 +5,15 @@ import {
   hideElement,
   showElement,
 } from "./components.js";
-import { Client } from "./take-turns.js";
+import { createClient, createCanvas } from "./take-turns.js";
 import environment from "./environment.json" assert { type: "json" };
 
 const socket = io();
+const client = createClient();
 const controller = new ViewController({
   id: "main-controller",
   default: "home-view",
 });
-
-let room, player;
-const game = new Game();
 
 function startCanvas() {
   let canvas = document.getElementById("game-view/canvas");
