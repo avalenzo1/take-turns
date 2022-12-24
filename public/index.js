@@ -1,5 +1,5 @@
 import { ViewController, Snackbar, clearEvents, hideElement, showElement } from "./components.js";
-import { createClient, createCanvas } from "./take-turns.js";
+import { createClient, createCanvas } from "./client.js";
 import environment from "./environment.json" assert { type: "json" };
 
 const socket = io();
