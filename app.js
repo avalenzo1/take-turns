@@ -5,7 +5,7 @@ const port = 3000;
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const { Lobby, Room, Player, createServer } = require("./game.js")
+const { createServer } = require("./server.js");
 const io = new Server(server);
 
 app.use(express.static(__dirname + "/public"));
