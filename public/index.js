@@ -5,7 +5,7 @@ import {
   hideElement,
   showElement,
 } from "./components.js";
-import { Game } from "./take-turns.js";
+import { createClient } from "./game-client.js";
 import environment from "./environment.json" assert { type: "json" };
 
 const socket = io();
@@ -14,75 +14,10 @@ const controller = new ViewController({
   default: "home-view",
 });
 
-let room, player;
-const game = new Game();
-
-function startCanvas() {
-  let canvas = document.getElementById("game-view/canvas");
-  let ctx = canvas.getContext("2d");
-  
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  let path, paths = [];
-  let active = false;
-  
-  window.addEventListener("resize", function (e) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-  
-  canvas.addEventListener("mousedown", function (e) {
-    active = true;
-    path = [];
-    paths.push(path);
-    path.push([e.clientX, e.clientY]);
-  });
-  
-  canvas.addEventListener("mousemove", function (e) {
-    if (active) path.push([e.clientX, e.clientY]);
-  });
-
-  canvas.addEventListener("mouseup", function (e) {
-    active = false;
-  });
-  
-  function loop() {
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-    
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(0,0,canvas.width, canvas.height);
-    
-    for (let region of paths) {
-      ctx.lineWidth = 5;
-      ctx.fillStyle = "#000";
-      
-      ctx.beginPath();
-      
-      let i = region.length;
-      
-      while (i--) {
-        if (i === 0) {
-          ctx.moveTo(region[i][0], region[i][1]);
-        } else {
-          ctx.lineTo(region[i][0], region[i][1]);
-        }
-      }
-      
-      ctx.stroke();
-    }
-    
-    window.requestAnimationFrame(loop);
-  }
-  
-  loop();
-}
-
 controller.mount({
   "home-view": {
     mounted() {},
   },
-
   "new-view": {
     mounted() {
       socket.emit("server/new-room");
@@ -92,7 +27,6 @@ controller.mount({
       });
     },
   },
-
   "join-view": {
     mounted(view) {
       let form = document.getElementById("join-view/room-form");
@@ -105,7 +39,6 @@ controller.mount({
     },
     unmounted(view) {},
   },
-
   "lobby-view": {
     mounted(view) {
       let isolated = document.getElementById("lobby-view/isolated-view");
@@ -214,12 +147,10 @@ controller.mount({
         id: "snackbar-container",
         message: "Game Start!",
       });
-      
-      startCanvas();
     },
 
     unmounted() {},
-  },
+  }
 });
 
 (function () {
