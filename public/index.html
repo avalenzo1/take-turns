@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#FF3F00" />
@@ -9,146 +10,118 @@
     <link rel="canonical" href="https://take-turns.glitch.me/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="/style.css" />
-    <script
-      src="https://cdn.socket.io/4.5.4/socket.io.min.js"
-      integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js" integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI" crossorigin="anonymous"></script>
     <script src="/index.js" type="module" defer></script>
     <title>Take Turns!</title>
-  </head>
-  <body>
-    <main id="main-controller" class="view-controller">
-      <section class="page-view" data-view="home-view">
-        <div class="t-view justify-center">
-          <header class="t-header">
-            <h1>Take Turns!</h1>
-          </header>
-          <nav class="home-nav">
-            <a class="t-btn" data-link="join-view">Join Game</a>
+</head>
 
-            <a class="t-btn" data-link="new-view">New Game</a>
-            
-            <a class="t-btn" data-link="game-view">Start Local Game</a>
-          </nav>
-        </div>
-      </section>
-      <section class="page-view" data-view="join-view">
-        <nav class="t-nav">
-          <a class="t-btn" href="#" data-link="home-view" data-navigate="back">
-            <span class="material-symbols-sharp">arrow_back</span>
-          </a>
-          <div class="nav-title">Join Game</div>
-        </nav>
-        <div class="t-view justify-center">
-          <div>
-            <header class="t-header">
-              <h2>Enter Room ID</h2>
-            </header>
-            <form class="join-lookup" id="join-view/room-form">
-              <input class="t-field" maxlength="6" oninput="this.value = this.value.toUpperCase()" id="join-view/room-input" required />
-              <button type="submit" class="t-btn" id="join-view/room-submit">
+<body>
+    <main id="main-controller" class="view-controller">
+        <section class="page-view" data-view="home-view">
+            <div class="t-view justify-center">
+                <header class="t-header">
+                    <h1>Take Turns!</h1>
+                </header>
+                <nav class="home-nav">
+                    <a class="t-btn" data-link="join-view">Join Game</a>
+
+                    <a class="t-btn" data-link="new-view">New Game</a>
+
+                    <a class="t-btn" data-link="game-view">Start Local Game</a>
+                </nav>
+            </div>
+        </section>
+        <section class="page-view" data-view="join-view">
+            <nav class="t-nav">
+                <a class="t-btn" href="#" data-link="home-view" data-navigate="back">
+                    <span class="material-symbols-sharp">arrow_back</span>
+                </a>
+                <div class="nav-title">Join Game</div>
+            </nav>
+            <div class="t-view justify-center">
+                <div>
+                    <header class="t-header">
+                        <h2>Enter Room ID</h2>
+                    </header>
+                    <form class="join-lookup" id="join-view/room-form">
+                        <input class="t-field" maxlength="6" oninput="this.value = this.value.toUpperCase()" id="join-view/room-input" required />
+                        <button type="submit" class="t-btn" id="join-view/room-submit">
                 <span class="material-symbols-sharp">send</span>
               </button>
-            </form>
-          </div>
-        </div>
-      </section>
-      <section class="page-view" data-view="new-view">
-        <div class="t-view justify-center align-center">
-          <span> Loading... </span>
-        </div>
-      </section>
-      <section class="page-view" data-view="lobby-view">
-        <nav class="t-nav">
-          <a class="t-btn" href="#" data-link="home-view" data-navigate="back">
-            <span class="material-symbols-sharp">arrow_back</span>
-          </a>
-          <div class="nav-title">Room - <span id="lobby-view/room-id"></span></div>
-        </nav>
-        <div class="t-view">
-          <div class="t-modal" id="lobby-view/loader">
-            <img width="50px" height="50px" src="https://cdn.glitch.global/a7aea887-b529-44f3-9bea-e8cf36a42cf4/loader.svg?v=1671079719207">
-          </div>          
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="page-view" data-view="new-view">
+            <div class="t-view justify-center align-center">
+                <span> Loading... </span>
+            </div>
+        </section>
+        <section class="page-view" data-view="lobby-view">
+            <nav class="t-nav">
+                <a class="t-btn" href="#" data-link="home-view" data-navigate="back">
+                    <span class="material-symbols-sharp">arrow_back</span>
+                </a>
+                <div class="nav-title">Room - <span id="lobby-view/room-id"></span></div>
+            </nav>
+            <div class="t-view">
+                <div class="t-modal" id="lobby-view/loader">
+                    <img width="50px" height="50px" src="https://cdn.glitch.global/a7aea887-b529-44f3-9bea-e8cf36a42cf4/loader.svg?v=1671079719207">
+                </div>
 
-          <div class="d-flex justify-right">
-            <button class="t-btn t-btn--prominent">
+                <div class="d-flex justify-right">
+                    <button class="t-btn t-btn--prominent">
               <span class="material-symbols-sharp">more_vert</span>
             </button>
-          </div>
+                </div>
 
-          <fieldset class="t-fieldset t-share">
-            <legend class="t-legend">Share your Room ID!</legend>
-            <input
-              class="t-field t-share-field"
-              id="lobby-view/room-url"
-              readonly
-            />
-            <button class="t-btn t-btn--prominent" id="lobby-view/room-share">
+                <fieldset class="t-fieldset t-share">
+                    <legend class="t-legend">Share your Room ID!</legend>
+                    <input class="t-field t-share-field" id="lobby-view/room-url" readonly />
+                    <button class="t-btn t-btn--prominent" id="lobby-view/room-share">
               <span class="material-symbols-sharp">share</span>
             </button>
-          </fieldset>
+                </fieldset>
 
-          <section
-            class="isolated-view flex-grow"
-            id="lobby-view/isolated-view"
-            hidden
-          >
-            <img
-              src="https://cdn.glitch.global/a7aea887-b529-44f3-9bea-e8cf36a42cf4/lonely2.gif?v=1671245175801"
-            />
-            <div class="t-alert t-alert--primary">
-              You need at least 2 people to play.
-            </div>
-          </section>
+                <section class="isolated-view flex-grow" id="lobby-view/isolated-view" hidden>
+                    <img src="https://cdn.glitch.global/a7aea887-b529-44f3-9bea-e8cf36a42cf4/lonely2.gif?v=1671245175801" />
+                    <div class="t-alert t-alert--primary">
+                        You need at least 2 people to play.
+                    </div>
+                </section>
 
-          <section
-            class="party-view flex-grow"
-            id="lobby-view/party-view"
-            hidden
-          >
-            <h3>Players (<span id="lobby-view/player-count">0</span>)</h3>
+                <section class="party-view flex-grow" id="lobby-view/party-view" hidden>
+                    <h3>Players (<span id="lobby-view/player-count">0</span>)</h3>
 
-            <ul class="t-list-group flex-grow" id="lobby-view/player-list"></ul>
+                    <ul class="t-list-group flex-grow" id="lobby-view/player-list"></ul>
 
-            <button
-              class="t-btn t-btn--prominent t-btn--full t-btn--large"
-              id="lobby-view/player-ready"
-            >
+                    <button class="t-btn t-btn--prominent t-btn--full t-btn--large" id="lobby-view/player-ready">
               I'm ready!
             </button>
-          </section>
+                </section>
 
-          <style>
-            .party-view {
-              display: flex;
-              flex-direction: column;
-            }
-
-            .isolated-view {
-              display: grid;
-              place-items: center;
-            }
-          </style>
-        </div>
-      </section>
-      <section class="page-view" data-view="game-view">
-        <canvas class="t-canvas" id="game-view/canvas"></canvas>
-      </section>
+                <style>
+                    .party-view {
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    
+                    .isolated-view {
+                        display: grid;
+                        place-items: center;
+                    }
+                </style>
+            </div>
+        </section>
+        <section class="page-view" data-view="game-view" style="overflow: hidden;">
+            <div class="t-viewport" id="game-view/viewport"></div>
+        </section>
     </main>
 
-    <aside
-      class="t-snackbar-container t-gutters"
-      id="snackbar-container"
-    ></aside>
-  </body>
+    <aside class="t-snackbar-container t-gutters" id="snackbar-container"></aside>
+</body>
+
 </html>

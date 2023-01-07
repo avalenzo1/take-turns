@@ -1,281 +1,206 @@
 import { ViewController, Snackbar, clearEvents, hideElement, showElement } from "./components.js";
-import { createClient, createCanvas } from "./client.js";
+import { createClient } from "./client.js";
 import environment from "./environment.json" assert { type: "json" };
 
 const socket = io();
-const client = createClient();
+const client = createClient(socket);
 const controller = new ViewController({
-  id: "main-controller",
-  default: "home-view",
+    id: "main-controller",
+    default: "home-view",
 });
 
-function startCanvas() {
-  let canvas = document.getElementById("game-view/canvas");
-  let ctx = canvas.getContext("2d");
-  
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  let path, paths = [];
-  let active = false;
-  
-  window.addEventListener("resize", function (e) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-  
-  canvas.addEventListener("mousedown", function (e) {
-    active = true;
-    path = [];
-    paths.push(path);
-    path.push([e.clientX, e.clientY]);
-  });
-  
-  canvas.addEventListener("mousemove", function (e) {
-    if (active) path.push([e.clientX, e.clientY]);
-  });
-
-  canvas.addEventListener("mouseup", function (e) {
-    active = false;
-  });
-  
-  function loop() {
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-    
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(0,0,canvas.width, canvas.height);
-    
-    for (let region of paths) {
-      ctx.lineWidth = 5;
-      ctx.fillStyle = "#000";
-      
-      ctx.beginPath();
-      
-      let i = region.length;
-      
-      while (i--) {
-        if (i === 0) {
-          ctx.moveTo(region[i][0], region[i][1]);
-        } else {
-          ctx.lineTo(region[i][0], region[i][1]);
-        }
-      }
-      
-      ctx.stroke();
-    }
-    
-    window.requestAnimationFrame(loop);
-  }
-  
-  loop();
-}
-
 controller.mount({
-  "home-view": {
-    mounted() {},
-  },
-
-  "new-view": {
-    mounted() {
-      socket.emit("server/new-room");
-      new Snackbar({
-        id: "snackbar-container",
-        message: "Creating Room",
-      });
+    "home-view": {
+        mounted() {},
     },
-  },
 
-  "join-view": {
-    mounted(view) {
-      let form = document.getElementById("join-view/room-form");
-      let input = document.getElementById("join-view/room-input");
+    "new-view": {
+        mounted() {
+            socket.emit("Server/Room/Create");
 
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        socket.emit("server/join-room", input.value);
-      });
+            new Snackbar({
+              id: "snackbar-container",
+              message: "Creating Room",
+            });
+        },
     },
-    unmounted(view) {},
-  },
 
-  "lobby-view": {
-    mounted(view) {
-      let isolated = document.getElementById("lobby-view/isolated-view");
-      let party = document.getElementById("lobby-view/party-view");
-      let input = document.getElementById("lobby-view/room-url");
-      let title = document.getElementById("lobby-view/room-id");
-      let share = document.getElementById("lobby-view/room-share");
-      let list = document.getElementById("lobby-view/player-list");
-      let counter = document.getElementById("lobby-view/player-count");
-      let ready = document.getElementById("lobby-view/player-ready");
-      let cancel = view.querySelector('[data-navigate="back"]');
-      let loader = document.getElementById("lobby-view/loader");
+    "join-view": {
+        mounted(view) {
+            let form = document.getElementById("join-view/room-form");
+            let input = document.getElementById("join-view/room-input");
 
-      let metadata = {
-        title: "Take Turns",
-        text: "Play Take Turns with Me!",
-        url: "https://take-turns.glitch.me/?join=",
-      };
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                socket.emit("Server/Room/Join", input.value);
+            });
+        },
+        unmounted(view) {},
+    },
 
-      cancel.addEventListener("click", () => {
-        socket.emit("server/leave-room", room.id);
+    "lobby-view": {
+        mounted(view) {
+            let isolated = document.getElementById("lobby-view/isolated-view");
+            let party = document.getElementById("lobby-view/party-view");
+            let input = document.getElementById("lobby-view/room-url");
+            let title = document.getElementById("lobby-view/room-id");
+            let share = document.getElementById("lobby-view/room-share");
+            let list = document.getElementById("lobby-view/player-list");
+            let counter = document.getElementById("lobby-view/player-count");
+            let ready = document.getElementById("lobby-view/player-ready");
+            let cancel = view.querySelector('[data-navigate="back"]');
+            let loader = document.getElementById("lobby-view/loader");
+            let url =  `${window.location.protocol}//${window.location.host}/?join=`;
 
-        new Snackbar({
-          id: "snackbar-container",
-          message: "Left Room",
-        });
-      });
+            let metadata = {
+                title: "Take Turns",
+                text: "Play Take Turns with Me!",
+            };
 
-      share.addEventListener("click", async () => {
-        await navigator.share(metadata);
-      });
+            cancel.addEventListener("click", () => {
+                ready.disabled = false;
+                socket.emit("Server/Room/Leave");
 
-      input.addEventListener("click", async () => {
-        input.select();
-        input.setSelectionRange(0, 99999); // For mobile devices
+                new Snackbar({
+                    id: "snackbar-container",
+                    message: "Left Room",
+                });
+            });
 
-        try {
-          await navigator.clipboard.writeText(input.value);
+            share.addEventListener("click", async() => {
+                await navigator.share(metadata);
+            });
 
-          new Snackbar({
-            id: "snackbar-container",
-            message: "Copied Link",
-          });
-        } catch (e) {
-          new Snackbar({
-            id: "snackbar-container",
-            message: "Couldn't Copy Link",
-          });
-        }
-      });
+            input.addEventListener("click", async() => {
+                input.select();
+                input.setSelectionRange(0, 99999); // For mobile devices
 
-      ready.addEventListener("click", () => {
-        socket.emit("server/player-state", {
-          id: room.id,
-          state: {
-            ready: true,
-          },
-        });
+                try {
+                    await navigator.clipboard.writeText(input.value);
 
-        ready.disabled = true;
-      });
+                    new Snackbar({
+                        id: "snackbar-container",
+                        message: "Copied Link",
+                    });
+                } catch (e) {
+                    new Snackbar({
+                        id: "snackbar-container",
+                        message: "Couldn't Copy Link",
+                    });
+                }
+            });
 
-      socket.on("server/room-ready", function () {
-        controller.mountView("game-view");
-      });
+            ready.addEventListener("click", () => {
+                socket.emit("Server/Room/Set", { ready: true });
 
-      socket.on("server/room-details", function (details) {
-        hideElement(loader);
+                ready.disabled = true;
+            });
 
-        if (details.playerList.length > 1) {
-          hideElement(isolated);
-          showElement(party);
-        } else {
-          hideElement(party);
-          showElement(isolated);
-        }
+            socket.on("Server/Room/State/Start", function(details) {
+                controller.mountView("game-view");
+            });
 
-        title.innerHTML = details.id;
+            socket.on("Server/Room/State", function(details) {
+                hideElement(loader);
 
-        metadata.url = input.value =
-          "https://take-turns.glitch.me/?join=" + details.id;
-        list.innerHTML = "";
+                if (details.playerList.length > 1) {
+                    hideElement(isolated);
+                    showElement(party);
+                } else {
+                    hideElement(party);
+                    showElement(isolated);
+                }
 
-        counter.innerHTML = details.playerList.length;
+                title.innerHTML = details.id;
 
-        for (let player of details.playerList) {
-          let item = document.createElement("li");
-          item.setAttribute("data-player-id", player.id);
-          item.classList.add("t-list-group-item");
-          item.innerHTML = `${player.name} ${
-            player.ready
+                metadata.url = input.value =
+                    url + details.id;
+                list.innerHTML = "";
+
+                counter.innerHTML = details.playerList.length;
+
+                for (let player of details.playerList) {
+                    let item = document.createElement("li");
+                    item.setAttribute("data-player-id", player.id);
+                    item.classList.add("t-list-group-item");
+                    item.innerHTML = `${player.name} ${
+            player.state.ready
               ? '<span class="material-symbols-sharp" style="color: var(--tt-success)">done</span>'
               : '<span class="material-symbols-sharp">hourglass_top</span>'
           }`;
 
-          list.appendChild(item);
-        }
-      });
+                    list.appendChild(item);
+                }
 
-      socket.emit("server/room-details", room.id);
+                console.log(details)
+            });
+        },
     },
-  },
-  "game-view": {
-    mounted() {
-      new Snackbar({
-        id: "snackbar-container",
-        message: "Game Start!",
-      });
-      
-      startCanvas();
-    },
+    "game-view": {
+        mounted(view) {
+            new Snackbar({
+                id: "snackbar-container",
+                message: "Game Start!",
+            });
 
-    unmounted() {},
-  },
+            client.createStream(view);
+        },
+
+        unmounted() {
+
+        },
+    },
 });
 
-(function () {
-  const params = new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
+socket.on("Server/Console", function(res) {
+  new Snackbar({
+      id: "snackbar-container",
+      type: res.type,
+      message: res.message,
   });
-  const id = params.join;
 
-  if (id) {
-    socket.emit("server/join-room", id);
-  }
-})();
+  if (res.type === 'warning') console.warn(res.message);
+  if (res.type === 'danger') console.error(res.message);
+});
 
-socket.on("server/new-room", function (id) {
+socket.on("Server/Room/Create", function(room) {
+  new Snackbar({
+      id: "snackbar-container",
+      message: "Room Created",
+  });
+
+  socket.emit("Server/Room/Join", room.id);
+});
+
+socket.on("Server/Room/Join", function() {
   new Snackbar({
     id: "snackbar-container",
-    message: "Room Created",
+    message: "Joined Room",
   });
 
-  socket.emit("server/join-room", id);
+  controller.mountView("lobby-view");
 });
 
-socket.on("server/join-room", function (res) {
-  switch (res.type) {
-    case "success":
-      new Snackbar({
-        id: "snackbar-container",
-        message: "Joined Room",
-      });
-      room = res.room;
-
-      controller.mountView("lobby-view");
-      break;
-    case "error":
-      new Snackbar({
-        id: "snackbar-container",
-        message: res.message,
-        type: "danger",
-      });
-  }
-});
-
-// client-side
 socket.on("connect", () => {
-  new Snackbar({
-    id: "snackbar-container",
-    message: "Connected! 😀",
-    type: "success",
-  });
+    new Snackbar({
+        id: "snackbar-container",
+        message: "Connected! 😀",
+        type: "success",
+    });
 });
 
 socket.on("connect_error", (err) => {
-  new Snackbar({
-    id: "snackbar-container",
-    message: `An Error Occured: ${err.message}`,
-    type: "danger",
-  });
+    new Snackbar({
+        id: "snackbar-container",
+        message: `An Error Occured: ${err.message}`,
+        type: "danger",
+    });
 });
 
 socket.on("disconnect", () => {
-  new Snackbar({
-    id: "snackbar-container",
-    message: "Disconnected!!?? 🤬",
-    type: "danger",
-  });
-  socket.emit("server/leave-room", socket.id);
+    new Snackbar({
+        id: "snackbar-container",
+        message: "Disconnected!!?? 🤬",
+        type: "danger",
+    });
 });
