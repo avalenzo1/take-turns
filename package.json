@@ -6,10 +6,12 @@
     "chalk": "^5.2.0",
     "express": "^4.18.2",
     "socket.io": "^4.5.4",
-    "unique-names-generator": "^4.7.1",
     "leo-profanity": "^1.7.0",
     "uuid": "^9.0.1",
-    "he": "^1.2.0"
+    "he": "^1.2.0",
+    "unique-names-generator": "^4.7.1",
+    "multilingual-game-words": "^1.2.1",
+    "js-levenshtein": "^1.1.6"
   },
   "engines": {
     "node": "16.x"
