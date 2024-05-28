@@ -100,6 +100,8 @@ class Client {
       if (e.touches) {
         client.x = e.touches[0].clientX;
         client.y = e.touches[0].clientY;
+        
+        console.log(client);
       }
 
       client.buffer.push([client.x, client.y]);
@@ -203,10 +205,13 @@ class Client {
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
     });
+    
     const id = params.join;
 
     if (id) {
       this.socket.emit("Room/Player/Join", id);
+      
+      
     }
   }
 }

@@ -1,10 +1,10 @@
 :root {
   --font-family: "Roboto Mono", monospace;
-  --tt-primary-rgb: 255, 63, 0;
+  --tt-primary-rgb: 255, 69, 58;
   --tt-primary: rgb(var(--tt-primary-rgb));
   --tt-secondary-rgb: 50, 50, 50;
   --tt-secondary: rgb(var(--tt-secondary-rgb));
-  --tt-success-rgb: 75, 200, 115;
+  --tt-success-rgb: 75, 173, 86;
   --tt-success: rgb(var(--tt-success-rgb));
   --tt-info-rgb: 162, 196, 260;
   --tt-info: rgb(var(--tt-info-rgb));
@@ -35,11 +35,13 @@ input {
 
 body {
   margin: 0;
+  overflow: auto;
 }
 
 .view-controller {
   position: relative;
-    perspective: 500px;
+  perspective: 500px;
+  background-color: #ccc;
 }
 
 .view-controller .page-view {
@@ -49,19 +51,21 @@ body {
   position: relative;
   width: 100%;
   height: 100vh;
+  background-color: white;
   color: var(--tt-primary);
   overflow: auto;
 }
 
-.view-controller .page-view-mount {
-  display: flex;
+.view-controller .page-view-mounting {
   animation: slide-in-left 0.5s;
-  perspective: 250px;
 }
 
-.view-controller .page-view-unmount {
+.view-controller .page-view-mount {
+  display: flex;
+}
+
+.view-controller .page-view-unmounting {
   animation: slide-out-right 0.5s;
-  perspective: 250px;
 }
 
 .t-modal {
@@ -72,8 +76,18 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: grayscale(1);
   z-index: 100;
+}
+
+.t-modal-dialog {
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .t-gutters {
@@ -318,7 +332,7 @@ body {
 
 @keyframes slide-in-left {
   from {
-    transform: translate(-100%, 0) rotateY(180deg) rotateX(45deg);
+    transform: translate(-100%, 0) rotateY(45deg) rotateX(45deg);
   }
   to {
     transform: translate(0, 0) rotateY(0deg) rotateX(0deg);
@@ -327,10 +341,10 @@ body {
 
 @keyframes slide-out-right {
   from {
-    transform: translate(0, 0);
+    transform: translate(0, 0) rotateY(0deg) rotateX(0deg);
   }
   to {
-    transform: translate(100%, 0);
+    transform: translate(100%, 0) rotateY(-45deg) rotateX(-45deg);
   }
 }
 
@@ -358,6 +372,15 @@ body {
   justify-content: center;
   padding: 1rem;
   position: relative;
+  gap: 0.5rem;
+  background-color: gray;
+}
+
+.t-footer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
 }
 
 .t-canvas {
@@ -368,7 +391,7 @@ body {
   background-color: white;
 }
 
-.t-brushes {
+.t-viewport-nav {
   width: 100%;
   padding: 0.5rem;
   background-color: white;
@@ -394,7 +417,7 @@ body {
   font-size: small;
 }
 
-.t-list-group .t-list-group-item:nth-child(odd) {
+.t-list-group .t-list-group-item:nth-child(even) {
   background-color: rgb(var(--tt-primary-rgb), 0.1);
 }
 
@@ -438,8 +461,13 @@ body {
   .game-view {
     flex-direction: column !important;
   }
-  
+
   .home-nav {
     flex-direction: column;
+  }
+  
+  .t-footer {
+    flex-direction: row;
+    overflow: hidden;
   }
 }
