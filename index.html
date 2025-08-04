@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+      crossorigin="anonymous"
+    ></script>
+    <script src="/assets/vendor/skrill.js" defer></script>
+    <script src="/assets/js/game.js" defer></script>
+    <script src="/assets/js/app.js" defer></script>
+    <title>?</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="nav">
+        <button id="toggle-fullscreen-btn" class="btn">
+          <span class="material-symbols-outlined"> fullscreen </span>
+        </button>
+
+        <button id="toggle-audio-btn" class="btn">
+          <span class="material-symbols-outlined"> volume_up </span>
+        </button>
+
+        <button id="toggle-about-btn" class="btn">
+          <span class="material-symbols-outlined"> info </span>
+        </button>
+      </div>
+
+      <div class="modal hidden" id="about-modal">
+        <div class="modal-dialog">
+          <h1>
+            Dark Daybreak
+          </h1>
+          
+          <h2>
+            About This Game
+          </h2>
+          
+          <p>Author: <a href="https://portfolio-php.anthonyvalenzo4.repl.co/" target="_blank">???</a></p>
+          
+          <p>Version: 0.1.0 Pre-Alpha</p>
+          
+          <hr>
+          
+          <h2>
+            Shortcuts
+          </h2>
+          
+          <ul>
+            <li>[E] - Toggle Inventory</li>
+            <li>[Shift] - Toggle Run</li>
+          </ul>
+          
+          <h2>
+            Attributions
+          </h2>
+          
+          <ul>
+            <li>Free sound effects from <a target="_blank" href="https://www.fesliyanstudios.com">https://www.fesliyanstudios.com</a></li>
+            <li>Free sound effects from <a target="_blank" href="https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=107728">Pixabay</a></li>
+            <li>UUID: https://stackoverflow.com/a/2117523</li>
+            <li>isTouchDevice: https://stackoverflow.com/a/4819886</li>
+            <li>Quadtree: https://github.com/timohausmann/quadtree-js</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

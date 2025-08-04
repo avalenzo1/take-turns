@@ -1,0 +1,81 @@
+html, body, #app {
+  background-color: #232323;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+body, button {
+  font-family: monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal-dialog {
+  position: relative;
+  padding: 1rem;
+  background-color: black;
+  color: gray;
+  border-radius: 0.5rem;
+  border: solid 1px;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.nav {
+  display: flex;
+  position: absolute;
+  top: 0.5rem;
+  transition: 0.3s;
+  overflow: overlay;
+  border-radius: 2rem;
+  backdrop-filter: saturate(2.5) blur(5px);
+  background: #0000002e;
+  color: gray;
+  opacity: 0.5;
+}
+
+.nav:hover {
+  opacity: 1;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  height: 100%;
+  outline: 0;
+  image-rendering: pixelated;
+}
